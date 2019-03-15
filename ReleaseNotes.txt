@@ -1,2 +1,0 @@
-Uncomment the heavyweight versions in Prss and comment the better ones.
-Drop Prss/:id PUT
