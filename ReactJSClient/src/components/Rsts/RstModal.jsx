@@ -7,32 +7,47 @@ export default class RstModal extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         rstTitle: (this.props.rst && this.props.rst.title) || ""
+         rstTitle: (this.props.rst && this.props.rst.title) || "",
+         rstURL: (this.props.rst && this.props.rst.url) || "",
+         rstDescription: (this.props.rst && this.props.rst.description) || ""
       }
    }
 
    close = (result) => {
       this.props.onDismiss && this.props.onDismiss({
          status: result,
-         title: this.state.rstTitle
+         title: this.state.rstTitle,
+         url: this.state.rstURL,
+         description: this.state.rstDescription
       });
    }
 
    getValidationState = () => {
-      if (this.state.rstTitle) {
+      if (this.state.rstTitle && this.state.rstURL) {
          return null
       }
       return "warning";
    }
 
-   handleChange = (e) => {
+   handleTitleChange = (e) => {
       this.setState({ rstTitle: e.target.value });
+   }
+
+   handleURLChange = (e) => {
+      this.setState({ rstURL: e.target.value });
+   }
+
+   handleDescriptionChange = (e) => {
+      this.setState({ rstDescription: e.target.value });
    }
 
    componentWillReceiveProps = (nextProps) => {
       if (nextProps.showModal) {
-         this.setState({ rstTitle: (nextProps.rst && nextProps.rst.title)
-          || "" })
+         this.setState({
+            rstTitle: (this.props.rst && this.props.rst.title) || "",
+            rstURL: (this.props.rst && this.props.rst.url) || "",
+            rstDescription: (this.props.rst && this.props.rst.description) || ""
+         });
       }
    }
 
@@ -50,15 +65,29 @@ export default class RstModal extends Component {
                   <FormGroup controlId="formBasicText"
                    validationState={this.getValidationState()}
                   >
-                     <ControlLabel>Restaurant Title</ControlLabel>
+                     <ControlLabel>Restaurant Title*</ControlLabel>
                      <FormControl
                         type="text"
                         value={this.state.rstTitle}
-                        placeholder="Enter text"
-                        onChange={this.handleChange}
+                        placeholder="Pat's Phenomenal Pastries"
+                        onChange={this.handleTitleChange}
+                     />
+                     <ControlLabel>Restaurant URL*</ControlLabel>
+                     <FormControl
+                        type="text"
+                        value={this.state.rstURL}
+                        placeholder="https://patspastries.com"
+                        onChange={this.handleURLChange}
+                     />
+                     <ControlLabel>Restaurant Description</ControlLabel>
+                     <FormControl
+                        componentClass="textarea"
+                        value={this.state.rstDescription}
+                        placeholder="Pat loves to make pastries of all kinds..."
+                        onChange={this.handleDescriptionChange}
                      />
                      <FormControl.Feedback />
-                     <HelpBlock>Title can not be empty.</HelpBlock>
+                     <HelpBlock>Title and URL can not be empty.</HelpBlock>
                   </FormGroup>
                </form>
             </Modal.Body>

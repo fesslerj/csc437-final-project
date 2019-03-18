@@ -36,11 +36,15 @@ export default class RstOverview extends Component {
    }
 
    modRst(result) {
-      this.props.modRst(this.state.editRst.id, result.title);
+      this.props.modRst(this.state.editRst.id, result.title, result.url, result.description);
    }
 
    newRst(result) {
-      this.props.addRst({ title: result.title || null });
+      this.props.addRst({ 
+         title: result.title || null,
+         url: result.url || null,
+         description: result.description || null
+      });
    }
 
    openConfirmation = (rst) => {
