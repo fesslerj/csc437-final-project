@@ -33,14 +33,6 @@ class Main extends Component {
             <div>
                <Navbar>
                   <Navbar.Toggle />
-                  {this.signedIn() ?
-                     <Navbar.Text key={1}>
-                        {`Logged in as: ${this.props.Prss.firstName}
-                         ${this.props.Prss.lastName}`}
-                     </Navbar.Text>
-                     :
-                     ''
-                  }
                   <Navbar.Collapse>
                      <Nav>
                         {this.signedIn() ?
@@ -62,9 +54,15 @@ class Main extends Component {
                      </Nav>
                      <Nav pullRight>
                         {this.signedIn() ?
+                           [
+                              <Navbar.Text key={1}>
+                                 {`Logged in as: ${this.props.Prss.firstName}
+                                 ${this.props.Prss.lastName}`}
+                              </Navbar.Text>,
                               <LinkContainer key={0} to="/signout">
                                  <NavItem>Sign Out</NavItem>
                               </LinkContainer>
+                           ]
                            :
                            [
                               <LinkContainer key={0} to="/signin">

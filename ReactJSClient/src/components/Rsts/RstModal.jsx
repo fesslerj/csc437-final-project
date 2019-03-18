@@ -44,9 +44,9 @@ export default class RstModal extends Component {
    componentWillReceiveProps = (nextProps) => {
       if (nextProps.showModal) {
          this.setState({
-            rstTitle: (this.props.rst && this.props.rst.title) || "",
-            rstURL: (this.props.rst && this.props.rst.url) || "",
-            rstDescription: (this.props.rst && this.props.rst.description) || ""
+            rstTitle: (nextProps.rst && nextProps.rst.title) || "",
+            rstURL: (nextProps.rst && nextProps.rst.url) || "",
+            rstDescription: (nextProps.rst && nextProps.rst.description) || ""
          });
       }
    }
