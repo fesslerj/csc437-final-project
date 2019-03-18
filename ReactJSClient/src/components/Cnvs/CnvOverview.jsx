@@ -4,7 +4,6 @@ import { ListGroup, ListGroupItem, Col, Row, Button,
    Glyphicon } from 'react-bootstrap';
 import CnvModal from './CnvModal';
 import { ConfDialog } from '../index';
-import { delCnv} from '../../api';
 import './CnvOverview.css';
 
 export default class CnvOverview extends Component {
@@ -92,7 +91,7 @@ export default class CnvOverview extends Component {
             <ConfDialog
                show={this.state.showConfirmation}
                title={"Delete Conversation"}
-               body={`Are you sure you wish to delete the conversation `
+               body={`Are you sure you wish to delete the restaurant `
                 + `'${(this.state.delCnv && this.state.delCnv.title) || ""}'?`}
                buttons={["Yes", "No"]}
                onClose={(res) => { this.closeConfirmation(res); }}

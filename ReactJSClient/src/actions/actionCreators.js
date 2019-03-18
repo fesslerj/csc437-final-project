@@ -52,7 +52,7 @@ export function register(data, cb) {
 }
 
 /**
- * Retrieve a list of all conversations, optionally filtered to those owned by
+ * Retrieve a list of all restaurants, optionally filtered to those owned by
  * a particular user.
  * @param {?(number|string)} [userId] userId of owner (optional)
  * @param {?Function} [cb] callback function (optional)
@@ -70,8 +70,8 @@ export function updateCnvs(userId, cb) {
 }
 
 /**
- * Create a new conversation
- * @param {{title: string}} newCnv The conversation info (title)
+ * Create a new restaurant
+ * @param {{title: string}} newCnv The restaurant info (title)
  * @param {?Function} [cb] callback function (optional)
  */
 export function addCnv(newCnv, cb) {
@@ -84,9 +84,9 @@ export function addCnv(newCnv, cb) {
 }
 
 /**
- * Updates a conversation's title
- * @param {number} cnvId ID of the conversation to modify
- * @param {string} title new conversation title
+ * Updates a restaurant's title
+ * @param {number} cnvId ID of the restaurant to modify
+ * @param {string} title new restaurant title
  * @param {?Function} [cb] callback function (optional)
  */
 export function modCnv(cnvId, title, cb) {
@@ -99,8 +99,8 @@ export function modCnv(cnvId, title, cb) {
 }
 
 /**
- * Deletes a conversation
- * @param {(number|string)} cnvId the conversation's ID
+ * Deletes a restaurant
+ * @param {(number|string)} cnvId the restaurant's ID
  */
 export function delCnv(cnvId) {
    return (dispatch, prevState) => {
@@ -111,8 +111,8 @@ export function delCnv(cnvId) {
 }
 
 /**
- * Get all messages for a given conversation
- * @param {(number|string)} cnvId the conversation ID
+ * Get all messages for a given restaurant
+ * @param {(number|string)} cnvId the restaurant ID
  * @param {?(string|number|Date)} [dateTime] OPTIONAL: Inclusive upper bound
  * to return messages from.
  * If included, must be either a nonnegative integer Number (or a

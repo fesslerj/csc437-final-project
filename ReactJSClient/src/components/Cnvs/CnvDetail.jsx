@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { ListGroup, ListGroupItem, Col, Row, Button,
-   Glyphicon } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Col, Row, Button } from 'react-bootstrap';
 import MsgModal from '../Msgs/MsgModal';
-import { ConfDialog } from '../index';
-import { delCnv } from '../../api';
 
 export default class CnvDetail extends Component {
    constructor(props) {

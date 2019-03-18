@@ -73,7 +73,7 @@ To summarize, each component has
 Redux is inspired by Flux and the Elm languages' model for data management. Flux was published along with React by Facebook, but the fork Redux grew to be the dominating framework. It has a single state, that is altered by two steps
 
 **Actions**
-Some event that results in a new state, like a sign in request or a request to update the conversations. The result of an action is some new data.
+Some event that results in a new state, like a sign in request or a request to update the restaurants. The result of an action is some new data.
 
 **Reducers**
 Reducers receive the new data and reduce it to the new state.

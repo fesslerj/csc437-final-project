@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Register, SignIn, CnvOverview, CnvDetail,
-   ConfDialog, ErrorDialog } from '../index'
+   ErrorDialog } from '../index'
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Navbar, Nav, NavItem, ListGroup, 
-   ListGroupItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './Main.css';
 

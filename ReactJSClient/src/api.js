@@ -154,9 +154,9 @@ export function postPrs(user) {
 }
 
 /**
- * Get all conversations, owned by the specified userId (if provided)
+ * Get all restaurants, owned by the specified userId (if provided)
  * @param {(number|string)} userId user ID
- * @returns {Promise<CnvGetData[]>} resolves to a list of conversations
+ * @returns {Promise<CnvGetData[]>} resolves to a list of restaurants
  */
 export function getCnvs(userId = undefined) {
    return get("Cnvs" + ((typeof(userId) === 'number'
@@ -165,10 +165,10 @@ export function getCnvs(userId = undefined) {
 }
 
 /**
- * Update a conversation's title.
- * @param {number} cnvId conversation ID
- * @param {{title: string}} body new conversation info (title)
- * @returns {Promise<CnvGetData>} resolves to the updated conversation
+ * Update a restaurant's title.
+ * @param {number} cnvId restaurant ID
+ * @param {{title: string}} body new restaurant info (title)
+ * @returns {Promise<CnvGetData>} resolves to the updated restaurant
  */
 export function putCnv(cnvId, body) {
    return put(`Cnvs/${cnvId}`, body)
@@ -177,10 +177,10 @@ export function putCnv(cnvId, body) {
 }
 
 /**
- * Create a new conversation.
- * @param {{title: string}} body new conversation info (title)
+ * Create a new restaurant.
+ * @param {{title: string}} body new restaurant info (title)
  * @returns {Promise<CnvGetData>} resolves to the info of the new
- * conversation
+ * restaurant
  */
 export function postCnv(body) {
    return post('Cnvs', body, true)
@@ -202,7 +202,7 @@ export function delCnv(cnvId) {
 
 /**
  * 
- * @param {(number|string)} cnvId ID of the conversation to fetch
+ * @param {(number|string)} cnvId ID of the restaurant to fetch
  * messages from 
  * @param {?(Date|number|string)} [dateTime] Inclusive upper bound to
  * return messages from.

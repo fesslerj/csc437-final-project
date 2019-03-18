@@ -9,7 +9,7 @@ var async = require('async');
 
 var app = express();
 
-var applicationPort = 3000;
+var applicationPort = 3001;
 
 // HTTP error code constants
 var httpOk = 200;
@@ -35,9 +35,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
    console.log("Handling " + req.path + '/' + req.method);
    res.header("Access-Control-Allow-Origin", "http://localhost:"
-    + applicationPort);
+   + (applicationPort - 1).toString());
    res.header("Access-Control-Allow-Credentials", true);
-   res.header("Access-Control-Allow-Headers", "Content-Type");
+   res.header("Access-Control-Allow-Headers", "Accept, Accept-Encoding, Accept-Language, Access-Control-Request-Headers, Access-Control-Request-Method, Cache-Control, Connection, Content-Length, Content-Type, Pragma, Host, Origin, Referer, User-Agent");
+   res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+   res.header("Access-Control-Expose-Headers", "Location")
    next();
 });
 
@@ -62,7 +64,7 @@ app.use(Session.router);
 app.use(function(req, res, next) {
    console.log(req.path);
    if (req.session || (req.method === 'POST' &&
-    (req.path === '/Prss' || req.path === '/Ssns'))) {
+   (req.path === '/Prss' || req.path === '/Ssns'))) {
       req.validator = new Validator(req, res);
       next();
    }
@@ -85,45 +87,43 @@ app.use('/Msgs', require('./Routes/Conversation/Msgs.js'));
 app.delete('/DB', function(req, res) {
    var admin = req.session && req.session.isAdmin();
    
-   if (admin) {
-      
-      
+   if (admin) {  
       // Callbacks to clear tables
       var cbs = ["Conversation", "Message", "Person"].map(function(tblName) {
          return function(cb) {
             req.cnn.query("delete from " + tblName, cb);
          };
       });
-
+      
       // Callbacks to reset increment bases
       cbs = cbs.concat(["Conversation", "Message", "Person"].map(
-       function(tblName) {
-         return function(cb) {
-            req.cnn.query("alter table " + tblName + " auto_increment = 1",
-             cb);
-         };
-       }));
-
-      // Callback to reinsert admin user
-      cbs.push(function(cb) {console.log('Adding admin...');
+         function(tblName) {
+            return function(cb) {
+               req.cnn.query("alter table " + tblName + " auto_increment = 1",
+               cb);
+            };
+         }));
+         
+         // Callback to reinsert admin user
+         cbs.push(function(cb) {console.log('Adding admin...');
          req.cnn.query('INSERT INTO Person (firstName, lastName, email,'
-          + ' password, whenRegistered, role) VALUES '
-          + '("Joe", "Admin", "adm@11.com","password", NOW(), 1);', cb);
+         + ' password, whenRegistered, role) VALUES '
+         + '("Joe", "Admin", "adm@11.com","password", NOW(), 1);', cb);
       });
-
+      
       // Callback to clear sessions, release connection and return result
       cbs.push(function(callback){
          for (var session in Session.sessions)
-            delete Session.sessions[session];
+         delete Session.sessions[session];
          callback();
       });
-
+      
       async.series(cbs, function(err) {
          req.cnn.release();
          if (err)
-            res.status(errBadReq).json(err);
+         res.status(errBadReq).json(err);
          else
-            res.status(httpOk).end();
+         res.status(httpOk).end();
       });
       
    }
@@ -131,44 +131,6 @@ app.delete('/DB', function(req, res) {
       req.cnn.release();
       res.status(errForbidden).end();
    }
-
-   /* Equivalent expanded code for instructional reference
-      async.series([
-         function(callback){
-            cnn.query('delete from Person`', callback);
-         },
-         function(callback){
-            cnn.query('delete from Conversation', callback);
-         },
-         function(callback){
-            cnn.query('delete from Message', callback);
-         },
-         function(callback){
-            cnn.query('alter table Person auto_increment = 1', callback);
-         },
-         function(callback){
-            cnn.query('alter table Conversation auto_increment = 1',
-             callback);
-         },
-         function(callback){
-            cnn.query('alter table Message auto_increment = 1', callback);
-         },
-         function(callback){
-            cnn.query('INSERT INTO Person (firstName, lastName, email,' +
-                ' password, whenRegistered, role) VALUES ' +
-                '("Joe", "Admin", "adm@11.com","password", NOW(), 2);',
-             callback);
-         },
-         function(callback){
-            for (var session in Session.sessions)
-               delete Session.sessions[session];
-            res.send();
-         }
-      ],
-      function(err, status) {
-         console.log(err);
-      }
-   );*/
 });
 
 // Handler of last resort.  Print a stacktrace to console and send a

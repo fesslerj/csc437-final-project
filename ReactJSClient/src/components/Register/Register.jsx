@@ -5,8 +5,6 @@ import {
   Checkbox, Button, Alert
 } from 'react-bootstrap';
 
-import './Register.css';
-
 // Functional component label plus control w/optional help message
 function FieldGroup({id, label, help, ...props }) {
    return (
