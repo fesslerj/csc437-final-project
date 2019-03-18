@@ -315,9 +315,9 @@ center {
 <ul>
 <li>[ ] Add a logout link to the navbar</li>
 <li>[ ] Expand the errorTranslate to do basic internationalization</li>
-<li>[ ] Add a My Conversations link to the home page.</li>
-<li>[ ] Show last message time in a ConversationItem</li>
-<li>[ ] Add the entirely missing Conversation Detail page</li>
+<li>[ ] Add a My Restaurants link to the home page.</li>
+<li>[ ] Show last review time in a RestaurantItem</li>
+<li>[ ] Add the entirely missing Restaurant Detail page</li>
 <li>[ ] Prevent routes from loading / re-route if user not signed in</li>
 </ul>
 <h1>React and Redux</h1>
@@ -1101,7 +1101,7 @@ For example, a production setup might look like this after the app is deployed:<
 <p><code>js
   &quot;proxy&quot;: &quot;http://localhost:4000&quot;,</code></p>
 <p>This way, when you <code>fetch('/api/todos')</code> in development, the development server will recognize that it’s not a static asset, and will proxy your request to <code>http://localhost:4000/api/todos</code> as a fallback. The development server will only attempt to send requests without a <code>text/html</code> accept header to the proxy.</p>
-<p>Conveniently, this avoids <a href="http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations">CORS issues</a> and error messages like this in development:</p>
+<p>Conveniently, this avoids <a href="http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations">CORS issues</a> and error reviews like this in development:</p>
 <p><code>Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.</code></p>
 <p>Keep in mind that <code>proxy</code> only has effect in development (with <code>npm start</code>), and it is up to you to ensure that URLs like <code>/api/todos</code> point to the right thing in production. You don’t have to use the <code>/api</code> prefix. Any unrecognized request without a <code>text/html</code> accept header will be redirected to the specified <code>proxy</code>.</p>
 <p>The <code>proxy</code> option supports HTTP, HTTPS and WebSocket connections.<br>
@@ -1289,7 +1289,7 @@ import App from './App';</p>
 import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';</p>
-<p>it('renders welcome message', () =&gt; {
+<p>it('renders welcome review', () =&gt; {
   const wrapper = shallow(<App />);
   const welcome = <h2>Welcome to React</h2>;
   // expect(wrapper.contains(welcome)).to.equal(true);
@@ -1406,7 +1406,7 @@ To help you make up your mind, here is a list of APIs that <strong>need jsdom</s
 <h3>Snapshot Testing</h3>
 <p>Snapshot testing is a feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output. <a href="http://facebook.github.io/jest/blog/2016/07/27/jest-14.html">Read more about snapshot testing.</a></p>
 <h3>Editor Integration</h3>
-<p>If you use <a href="https://code.visualstudio.com">Visual Studio Code</a>, there is a <a href="https://github.com/orta/vscode-jest">Jest extension</a> which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.</p>
+<p>If you use <a href="https://code.visualstudio.com">Visual Studio Code</a>, there is a <a href="https://github.com/orta/vscode-jest">Jest extension</a> which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail reviews inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.</p>
 <p><img src="https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png" alt="VS Code Jest Preview" /></p>
 <!--
 ## Developing Components in Isolation
@@ -1519,13 +1519,13 @@ network.</p>
 <p>Users aren't always familiar with offline-first web apps. It can be useful to
 <a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux#inform_the_user_when_the_app_is_ready_for_offline_consumption">let the user know</a>
 when the service worker has finished populating your caches (showing a &quot;This web
-app works offline!&quot; message) and also let them know when the service worker has
+app works offline!&quot; review) and also let them know when the service worker has
 fetched the latest updates that will be available the next time they load the
-page (showing a &quot;New content is available; please refresh.&quot; message). Showing
-this messages is currently left as an exercise to the developer, but as a
+page (showing a &quot;New content is available; please refresh.&quot; review). Showing
+this reviews is currently left as an exercise to the developer, but as a
 starting point, you can make use of the logic included in <a href="src/service-worker-registration.js"><code>src/service-worker-registration.js</code></a>, which
 demonstrates which service worker lifecycle events to listen for to detect each
-scenario, and which as a default, just logs appropriate messages to the
+scenario, and which as a default, just logs appropriate reviews to the
 JavaScript console.</p>
 </li>
 <li>

@@ -14,25 +14,25 @@ create table Person (
    unique key(email)
 );
 
-create table Conversation (
+create table Restaurant (
    id int auto_increment primary key,
    ownerId int,
    title varchar(80) not null,
-   lastMessage datetime,
-   constraint FKMessage_ownerId foreign key (ownerId) references Person(id)
+   lastReview datetime,
+   constraint FKReview_ownerId foreign key (ownerId) references Person(id)
     on delete cascade,
    unique key UK_title(title)
 );
 
-create table Message (
+create table Review (
    id int auto_increment primary key,
-   cnvId int not null,
+   rstId int not null,
    prsId int not null,
    whenMade datetime not null,
    content varchar(5000) not null,
-   constraint FKMessage_cnvId foreign key (cnvId) references Conversation(id)
+   constraint FKReview_rstId foreign key (rstId) references Restaurant(id)
     on delete cascade,
-   constraint FKMessage_prsId foreign key (prsId) references Person(id)
+   constraint FKReview_prsId foreign key (prsId) references Person(id)
     on delete cascade
 );
 

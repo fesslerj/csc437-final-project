@@ -5,7 +5,7 @@ import {
   Checkbox, Button, Alert
 } from 'react-bootstrap';
 
-// Functional component label plus control w/optional help message
+// Functional component label plus control w/optional help review
 function FieldGroup({id, label, help, ...props }) {
    return (
       <FormGroup controlId={id}>

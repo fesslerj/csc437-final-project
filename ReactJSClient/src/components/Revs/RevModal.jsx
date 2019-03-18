@@ -1,64 +1,61 @@
 import React, { Component } from 'react';
 import {
-   Modal, Button, FormControl, ControlLabel, FormGroup, HelpBlock
+   Modal, Button, FormControl, ControlLabel, FormGroup
 } from 'react-bootstrap';
 
-export default class CnvModal extends Component {
+export default class RevModal extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         cnvTitle: (this.props.cnv && this.props.cnv.title) || ""
+         revContent: (this.props.rev && this.props.rev.content) || "",
       }
    }
 
    close = (result) => {
       this.props.onDismiss && this.props.onDismiss({
          status: result,
-         title: this.state.cnvTitle
+         content: this.state.revContent
       });
    }
 
    getValidationState = () => {
-      if (this.state.cnvTitle) {
-         return null
-      }
-      return "warning";
+      return null;
    }
 
    handleChange = (e) => {
-      this.setState({ cnvTitle: e.target.value });
+      this.setState({ revContent: e.target.value });
    }
 
    componentWillReceiveProps = (nextProps) => {
       if (nextProps.showModal) {
-         this.setState({ cnvTitle: (nextProps.cnv && nextProps.cnv.title)
+         this.setState({ revContent: (nextProps.rev && nextProps.rev.content)
           || "" })
       }
    }
 
    render() {
       return (
-         <Modal show={this.props.showModal} onHide={() =>
-          this.close("Cancel")}>
+         <Modal show={this.props.showModal}
+          onHide={() => this.close("Cancel")}
+         >
             <Modal.Header closeButton>
                <Modal.Title>{this.props.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                <form onSubmit={(e) =>
-                  e.preventDefault() || this.state.cnvTitle.length ?
-                     this.close("Ok") : this.close("Cancel")}>
+                  e.preventDefault() || true ?
+                   this.close("Ok") : this.close("Cancel")}>
                   <FormGroup controlId="formBasicText"
                    validationState={this.getValidationState()}
                   >
-                     <ControlLabel>Conversation Title</ControlLabel>
+                     <ControlLabel>Review Content</ControlLabel>
                      <FormControl
-                        type="text"
-                        value={this.state.cnvTitle}
+                        componentClass="textarea"
+                        value={this.state.revContent}
                         placeholder="Enter text"
                         onChange={this.handleChange}
                      />
                      <FormControl.Feedback />
-                     <HelpBlock>Title can not be empty.</HelpBlock>
                   </FormGroup>
                </form>
             </Modal.Body>

@@ -57,89 +57,89 @@ export function register(data, cb) {
  * @param {?(number|string)} [userId] userId of owner (optional)
  * @param {?Function} [cb] callback function (optional)
  */
-export function updateCnvs(userId, cb) {
+export function updateRsts(userId, cb) {
    return (dispatch, prevState) => {
-      api.getCnvs(userId)
-      .then((cnvs) => dispatch({ type: 'UPDATE_CNVS', cnvs }))
+      api.getRsts(userId)
+      .then((rsts) => dispatch({ type: 'UPDATE_RSTS', rsts }))
       .then(() => {
          if (typeof(cb) === 'function')
             cb();
       })
-      .catch(error => dispatch(prepareError('UPDATE_CNVS_ERR', error)));
+      .catch(error => dispatch(prepareError('UPDATE_RSTS_ERR', error)));
    };
 }
 
 /**
  * Create a new restaurant
- * @param {{title: string}} newCnv The restaurant info (title)
+ * @param {{title: string}} newRst The restaurant info (title)
  * @param {?Function} [cb] callback function (optional)
  */
-export function addCnv(newCnv, cb) {
+export function addRst(newRst, cb) {
    return (dispatch, prevState) => {
-      api.postCnv(newCnv)
-      .then((nCnv) => dispatch({type: 'ADD_CNV', cnv: nCnv}))
+      api.postRst(newRst)
+      .then((nRst) => dispatch({type: 'ADD_RST', rst: nRst}))
       .then(() => {if (cb) cb();})
-      .catch(error => dispatch(prepareError('ADD_CNV_ERR', error)));
+      .catch(error => dispatch(prepareError('ADD_RST_ERR', error)));
    };
 }
 
 /**
  * Updates a restaurant's title
- * @param {number} cnvId ID of the restaurant to modify
+ * @param {number} rstId ID of the restaurant to modify
  * @param {string} title new restaurant title
  * @param {?Function} [cb] callback function (optional)
  */
-export function modCnv(cnvId, title, cb) {
+export function modRst(rstId, title, cb) {
    return (dispatch, prevState) => {
-      api.putCnv(cnvId, {title})
-      .then((cnv) => dispatch({ type: 'UPDATE_CNV', cnv }))
+      api.putRst(rstId, {title})
+      .then((rst) => dispatch({ type: 'UPDATE_RST', rst }))
       .then(() => {if (cb) cb();})
-      .catch(error => dispatch(prepareError('UPDATE_CNV_ERR', error)));
+      .catch(error => dispatch(prepareError('UPDATE_RST_ERR', error)));
    };
 }
 
 /**
  * Deletes a restaurant
- * @param {(number|string)} cnvId the restaurant's ID
+ * @param {(number|string)} rstId the restaurant's ID
  */
-export function delCnv(cnvId) {
+export function delRst(rstId) {
    return (dispatch, prevState) => {
-      api.delCnv(cnvId)
-      .then(() => dispatch({ type: 'DEL_CNV', cnvId }))
-      .catch(error => dispatch(prepareError('DEL_CNV_ERR', error)));
+      api.delRst(rstId)
+      .then(() => dispatch({ type: 'DEL_RST', rstId }))
+      .catch(error => dispatch(prepareError('DEL_RST_ERR', error)));
    };
 }
 
 /**
- * Get all messages for a given restaurant
- * @param {(number|string)} cnvId the restaurant ID
+ * Get all reviews for a given restaurant
+ * @param {(number|string)} rstId the restaurant ID
  * @param {?(string|number|Date)} [dateTime] OPTIONAL: Inclusive upper bound
- * to return messages from.
+ * to return reviews from.
  * If included, must be either a nonnegative integer Number (or a
  * String which parses to a
  * nonnegative integer Number), or else a Date.
- * @param {?(number|string)} [num] OPTIONAL: Maximum number of messages to
+ * @param {?(number|string)} [num] OPTIONAL: Maximum number of reviews to
  * return.
  */
-export function updateMsgs(cnvId, dateTime = undefined,
+export function updateRevs(rstId, dateTime = undefined,
  num = undefined) {
    return (dispatch, prevState) => {
-      api.getMsgs(cnvId, dateTime, num)
-      .then((msgs) => dispatch({ type: 'UPDATE_MSGS', cnvId, msgs}))
-      .catch(error => dispatch(prepareError('UPDATE_MSGS_ERR', error)));
+      api.getRevs(rstId, dateTime, num)
+      .then((revs) => dispatch({ type: 'UPDATE_REVS', rstId, revs}))
+      .catch(error => dispatch(prepareError('UPDATE_REVS_ERR', error)));
    };
 }
 
 /**
- * Post a new message to a cnv
- * @param {(number|string)} cnvId the cnv ID
- * @param {{content: string}} newMsg the message data (content)
+ * Post a new review to a rst
+ * @param {(number|string)} rstId the rst ID
+ * @param {{content: string}} newRev the review data (content)
  */
-export function addMsg(cnvId, newMsg) {
+export function addRev(rstId, newRev) {
    return (dispatch, prevState) => {
-      api.postMsg(cnvId, newMsg)
-      .then((msg) => dispatch({type: 'ADD_MSG', cnvId, msg}))
-      .catch(error => dispatch(prepareError('ADD_MSG_ERR', error)));
+      api.postRev(rstId, newRev)
+      .then((rev) => dispatch({type: 'ADD_REV', rstId, rev}))
+      .catch(error => dispatch(prepareError('ADD_REV_ERR', error)));
    };
 }
 

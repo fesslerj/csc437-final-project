@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import Prss from './Prss';
-import Cnvs from './Cnvs';
+import Rsts from './Rsts';
 import Errs from './Errs';
-import Msgs from './Msgs';
+import Revs from './Revs';
 
-const rootReducer = combineReducers({Prss, Cnvs, Msgs, Errs});
+const rootReducer = combineReducers({Prss, Rsts, Revs, Errs});
 
 export default rootReducer;
 

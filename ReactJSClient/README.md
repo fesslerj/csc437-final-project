@@ -2,9 +2,9 @@
 
 - [ ] Add a logout link to the navbar
 - [ ] Expand the errorTranslate to do basic internationalization
-- [ ] Add a My Conversations link to the home page.
-- [ ] Show last message time in a ConversationItem
-- [ ] Add the entirely missing Conversation Detail page
+- [ ] Add a My Restaurants link to the home page.
+- [ ] Show last review time in a RestaurantItem
+- [ ] Add the entirely missing Restaurant Detail page
 - [ ] Prevent routes from loading / re-route if user not signed in
 
 # React and Redux
@@ -1017,7 +1017,7 @@ To tell the development server to proxy any unknown requests to your API server 
 
 This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback. The development server will only attempt to send requests without a `text/html` accept header to the proxy.
 
-Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
+Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error reviews like this in development:
 
 ```
 Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
@@ -1288,7 +1288,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
 
-it('renders welcome message', () => {
+it('renders welcome review', () => {
   const wrapper = shallow(<App />);
   const welcome = <h2>Welcome to React</h2>;
   // expect(wrapper.contains(welcome)).to.equal(true);
@@ -1452,7 +1452,7 @@ Snapshot testing is a feature of Jest that automatically generates text snapshot
 
 ### Editor Integration
 
-If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
+If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail reviews inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
@@ -1567,13 +1567,13 @@ network.
 1. Users aren't always familiar with offline-first web apps. It can be useful to
 [let the user know](https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux#inform_the_user_when_the_app_is_ready_for_offline_consumption)
 when the service worker has finished populating your caches (showing a "This web
-app works offline!" message) and also let them know when the service worker has
+app works offline!" review) and also let them know when the service worker has
 fetched the latest updates that will be available the next time they load the
-page (showing a "New content is available; please refresh." message). Showing
-this messages is currently left as an exercise to the developer, but as a
+page (showing a "New content is available; please refresh." review). Showing
+this reviews is currently left as an exercise to the developer, but as a
 starting point, you can make use of the logic included in [`src/service-worker-registration.js`](src/service-worker-registration.js), which
 demonstrates which service worker lifecycle events to listen for to detect each
-scenario, and which as a default, just logs appropriate messages to the
+scenario, and which as a default, just logs appropriate reviews to the
 JavaScript console.
 
 1. By default, the generated service worker file will not intercept or cache any

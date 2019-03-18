@@ -26,7 +26,7 @@ export default class ErrorDialog extends PureComponent {
          let paramList = (err.jsonErrorParams || []);
 
          if (!tagList.length) {
-            tagList = [err.reason + ': ' + (err.message || '')];
+            tagList = [err.reason + ': ' + (err.review || '')];
             paramList = [[]];
          }
          

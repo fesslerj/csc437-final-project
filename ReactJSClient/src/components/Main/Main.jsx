@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Register, SignIn, CnvOverview, CnvDetail,
+import { Register, SignIn, RstOverview, RstDetail,
    ErrorDialog } from '../index'
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
@@ -40,11 +40,11 @@ class Main extends Component {
                      <Nav>
                         {this.signedIn() ?
                            [
-                              <LinkContainer key={"all"} to="/allCnvs">
-                                 <NavItem>All Conversations</NavItem>
+                              <LinkContainer key={"all"} to="/allRsts">
+                                 <NavItem>All Restaurants</NavItem>
                               </LinkContainer>,
-                              <LinkContainer key={"my"} to="/myCnvs">
-                                 <NavItem>My Conversations</NavItem>
+                              <LinkContainer key={"my"} to="/myRsts">
+                                 <NavItem>My Restaurants</NavItem>
                               </LinkContainer>
                            ]
                            :
@@ -78,7 +78,7 @@ class Main extends Component {
             {/*Alternate pages beneath navbar, based on current route*/}
             <Switch>
                <Route exact path='/'
-                  component={() => this.props.Prss ? <Redirect to="/allCnvs" />
+                  component={() => this.props.Prss ? <Redirect to="/allRsts" />
                    : <Redirect to="/signin" />} />
                <Route path='/signout' component={() => {
                   this.props.signOut();
@@ -88,11 +88,11 @@ class Main extends Component {
                   <SignIn {...this.props} />} />
                <Route path='/register'
                   render={() => <Register {...this.props} />} />
-               <ProtectedRoute path='/allCnvs' component={CnvOverview}
+               <ProtectedRoute path='/allRsts' component={RstOverview}
                   {...this.props}/>
-               <ProtectedRoute path='/myCnvs' component={CnvOverview}
+               <ProtectedRoute path='/myRsts' component={RstOverview}
                   userOnly="true" {...this.props}/>
-               <ProtectedRoute path='/CnvDetail/:id' component={CnvDetail}
+               <ProtectedRoute path='/RstDetail/:id' component={RstDetail}
                   {...this.props}/>
                
                

@@ -30,7 +30,7 @@ Validator.Tags = {
    noOldPwd: "noOldPwd",            //   Change of password requires an
                                     //      old password
    dupTitle: "dupTitle",            //   Title duplicates an existing
-                                    //      Conversation title
+                                    //      Restaurant title
    queryFailed: "queryFailed",      //   A SQL query failed
    forbiddenField: "forbiddenField",// * A field given in the request body
                                     //      is forbidden

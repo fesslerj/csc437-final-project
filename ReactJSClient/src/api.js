@@ -79,15 +79,15 @@ export function del(endpoint, ignoreBody = true) {
  */
 
  /**
-  * @typedef {Object} CnvGetData
+  * @typedef {Object} RstGetData
   * @property {!number} id
   * @property {!string} title
   * @property {!number} ownerId
-  * @property {?number} [lastMessage]
+  * @property {?number} [lastReview]
   */
 
  /**
-  * @typedef {Object} MsgGetDataWithId
+  * @typedef {Object} RevGetDataWithId
   * @property {!number} id
   * @property {!number} whenMade
   * @property {!string} email
@@ -95,7 +95,7 @@ export function del(endpoint, ignoreBody = true) {
   */
 
 /**
- * @typedef {Object} MsgGetDataNoId
+ * @typedef {Object} RevGetDataNoId
  * @property {!number} whenMade
  * @property {!string} email
  * @property {!content} content
@@ -156,63 +156,63 @@ export function postPrs(user) {
 /**
  * Get all restaurants, owned by the specified userId (if provided)
  * @param {(number|string)} userId user ID
- * @returns {Promise<CnvGetData[]>} resolves to a list of restaurants
+ * @returns {Promise<RstGetData[]>} resolves to a list of restaurants
  */
-export function getCnvs(userId = undefined) {
-   return get("Cnvs" + ((typeof(userId) === 'number'
+export function getRsts(userId = undefined) {
+   return get("Rsts" + ((typeof(userId) === 'number'
     || typeof(userId) === 'string') ? `?owner=${userId}` : ""))
     .then(({jsonBody}) => expectArray(jsonBody))
 }
 
 /**
  * Update a restaurant's title.
- * @param {number} cnvId restaurant ID
+ * @param {number} rstId restaurant ID
  * @param {{title: string}} body new restaurant info (title)
- * @returns {Promise<CnvGetData>} resolves to the updated restaurant
+ * @returns {Promise<RstGetData>} resolves to the updated restaurant
  */
-export function putCnv(cnvId, body) {
-   return put(`Cnvs/${cnvId}`, body)
-    .then(() => get(`Cnvs/${cnvId}`))
+export function putRst(rstId, body) {
+   return put(`Rsts/${rstId}`, body)
+    .then(() => get(`Rsts/${rstId}`))
     .then(({jsonBody}) => jsonBody);
 }
 
 /**
  * Create a new restaurant.
  * @param {{title: string}} body new restaurant info (title)
- * @returns {Promise<CnvGetData>} resolves to the info of the new
+ * @returns {Promise<RstGetData>} resolves to the info of the new
  * restaurant
  */
-export function postCnv(body) {
-   return post('Cnvs', body, true)
+export function postRst(body) {
+   return post('Rsts', body, true)
     .then(({response}) => {
       let location = response.headers.get("Location").split('/');
       
-      return get(`Cnvs/${location[location.length-1]}`);
+      return get(`Rsts/${location[location.length-1]}`);
     })
     .then(({jsonBody}) => jsonBody);
 }
 
 /**
- * Deletes a cnv
- * @param {(number|string)} cnvId the cnv ID
+ * Deletes a rst
+ * @param {(number|string)} rstId the rst ID
  */
-export function delCnv(cnvId) {
-   return del(`Cnvs/${cnvId}`);
+export function delRst(rstId) {
+   return del(`Rsts/${rstId}`);
 }
 
 /**
  * 
- * @param {(number|string)} cnvId ID of the restaurant to fetch
- * messages from 
+ * @param {(number|string)} rstId ID of the restaurant to fetch
+ * reviews from 
  * @param {?(Date|number|string)} [dateTime] Inclusive upper bound to
- * return messages from.
+ * return reviews from.
  * If included, must be either a nonnegative integer Number (or a
  * String which parses to a
  * nonnegative integer Number), or else a Date.
- * @param {?(number|string)} [num] Maximum number of messages to return.
- * @returns {Promise<MsgGetDataWithId[]>}
+ * @param {?(number|string)} [num] Maximum number of reviews to return.
+ * @returns {Promise<RevGetDataWithId[]>}
  */
-export function getMsgs(cnvId, dateTime = undefined, num = undefined) {
+export function getRevs(rstId, dateTime = undefined, num = undefined) {
    let paramDT = '';
    let paramNum = '';
    let paramString = '';
@@ -229,7 +229,7 @@ export function getMsgs(cnvId, dateTime = undefined, num = undefined) {
    }
    else if (dateTime) {
       return Promise.reject(new TypeError("The parameter dateTime was an " +
-       "unexpected type in API call getMsgs."));
+       "unexpected type in API call getRevs."));
    }
    
    if (typeof(num) === 'number' && Number.isFinite(num)) {
@@ -240,33 +240,33 @@ export function getMsgs(cnvId, dateTime = undefined, num = undefined) {
    }
    else if (num) {
       return Promise.reject(new TypeError("The parameter num was an " +
-       "unexpected type in API call getMsgs."));
+       "unexpected type in API call getRevs."));
    }
 
    paramString = [paramDT, paramNum].filter(param => param).join('&');
    paramString = paramString && `?${paramString}`;
 
-   return get(`Cnvs/${cnvId}/Msgs${paramString}`, false)
+   return get(`Rsts/${rstId}/Revs${paramString}`, false)
     .then(({jsonBody}) => expectArray(jsonBody));
 }
 
 /**
- * Post a new message to a cnv
- * @param {(number|string)} cnvId the cnv ID
- * @param {{content: string}} msg the message data to post
- * @returns {Promise<MsgGetDataWithId>}
+ * Post a new review to a rst
+ * @param {(number|string)} rstId the rst ID
+ * @param {{content: string}} rev the review data to post
+ * @returns {Promise<RevGetDataWithId>}
  */
-export function postMsg(cnvId, msg) {
-   let retMsgId = null;
+export function postRev(rstId, rev) {
+   let retRevId = null;
 
-   return post(`Cnvs/${cnvId}/Msgs`, msg, true)
+   return post(`Rsts/${rstId}/Revs`, rev, true)
    .then(({response}) => {
       let location = response.headers.get("Location").split('/');
 
-      retMsgId = location[location.length-1];
-      return get(`Msgs/${retMsgId}`);
+      retRevId = location[location.length-1];
+      return get(`Revs/${retRevId}`);
     })
-    .then(({jsonBody}) => Object.assign({}, jsonBody, { id: retMsgId }));
+    .then(({jsonBody}) => Object.assign({}, jsonBody, { id: retRevId }));
 }
 
 const errMap = {
@@ -280,7 +280,7 @@ const errMap = {
         forbiddenRole: 'Role specified is not permitted.',
         noOldPwd: 'Change of password requires an old password',
         oldPwdMismatch: 'Old password that was provided is incorrect.',
-        dupTitle: 'Conversation title duplicates an existing one',
+        dupTitle: 'Restaurant title duplicates an existing one',
         dupEnrollment: 'Duplicate enrollment',
         forbiddenField: 'Field in body not allowed.',
         queryFailed: 'Query failed (server problem).'
@@ -295,7 +295,7 @@ const errMap = {
         forbiddenRole: '[ES] Role specified is not permitted.',
         noOldPwd: '[ES] Change of password requires an old password',
         oldPwdMismatch: '[ES] Old password that was provided is incorrect.',
-        dupTitle: '[ES] Conversation title duplicates an existing one',
+        dupTitle: '[ES] Restaurant title duplicates an existing one',
         dupEnrollment: '[ES] Duplicate enrollment',
         forbiddenField: '[ES] Field in body not allowed.',
         queryFailed: '[ES] Query failed (server problem).'

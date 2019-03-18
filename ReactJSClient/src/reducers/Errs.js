@@ -4,12 +4,12 @@ function Errs(state = [], action) {
    case 'LOGIN_ERR':
    case 'LOGOUT_ERR':
    case 'REGISTER_ERR':
-   case 'UPDATE_CNVS_ERR':
-   case 'ADD_CNV_ERR':
-   case 'UPDATE_CNV_ERR':
-   case 'DEL_CNV_ERR':
-   case 'UPDATE_MSGS_ERR':
-   case 'ADD_MSG_ERR':
+   case 'UPDATE_RSTS_ERR':
+   case 'ADD_RST_ERR':
+   case 'UPDATE_RST_ERR':
+   case 'DEL_RST_ERR':
+   case 'UPDATE_REVS_ERR':
+   case 'ADD_REV_ERR':
    case 'COMPONENT_ERR':
       return state.concat(action.errors);
    case 'SIGN_OUT':

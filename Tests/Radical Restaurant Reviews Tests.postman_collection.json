@@ -721,7 +721,7 @@
 				}
 			],
 			"folder": "3f40f3cb-a9bc-40ab-8e24-e6d874269ec3",
-			"rawModeData": "{\n\t\"content\": \"Second message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"Second review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -754,7 +754,7 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Correct num messages found\"] = jsonData.length === 5;",
+							"tests[\"Correct num reviews found\"] = jsonData.length === 5;",
 							"",
 							"postman.setEnvironmentVariable(\"firstTime\", jsonData[0][\"whenMade\"]);",
 							"postman.setEnvironmentVariable(\"thirdTime\", jsonData[2][\"whenMade\"]);",
@@ -768,7 +768,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -943,9 +943,9 @@
 							"    }",
 							"}",
 							"",
-							"tests[\"Missing email message present\"] = foundEmail === true;",
-							"tests[\"Missing lastName message present\"] = foundLastName === true;",
-							"tests[\"Missing role message present\"] = foundRole === true;"
+							"tests[\"Missing email review present\"] = foundEmail === true;",
+							"tests[\"Missing lastName review present\"] = foundLastName === true;",
+							"tests[\"Missing role review present\"] = foundRole === true;"
 						],
 						"type": "text/javascript"
 					}
@@ -1002,9 +1002,9 @@
 							"    }",
 							"}",
 							"",
-							"tests[\"Missing email message present\"] = foundEmail === true;",
-							"tests[\"Missing lastName message present\"] = foundLastName === true;",
-							"tests[\"Missing role message present\"] = foundRole === true;"
+							"tests[\"Missing email review present\"] = foundEmail === true;",
+							"tests[\"Missing lastName review present\"] = foundLastName === true;",
+							"tests[\"Missing role review present\"] = foundRole === true;"
 						],
 						"type": "text/javascript"
 					}
@@ -1097,7 +1097,7 @@
 		},
 		{
 			"id": "2c35c419-fdb2-476a-936c-d18534bfb773",
-			"name": "Check first message details",
+			"name": "Check first review details",
 			"url": "{{url}}/Revs/1",
 			"description": "",
 			"data": [],
@@ -1125,7 +1125,7 @@
 							"",
 							"var jsonData = JSON.parse(responseBody);",
 							"",
-							"tests[\"Correct content found\"] = jsonData[\"content\"] === \"First message\"",
+							"tests[\"Correct content found\"] = jsonData[\"content\"] === \"First review\"",
 							"tests[\"Correct email found\"] = jsonData[\"email\"] === \"UserA@domainA\"",
 							"",
 							""
@@ -1138,7 +1138,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -1185,7 +1185,7 @@
 				}
 			],
 			"folder": "3f40f3cb-a9bc-40ab-8e24-e6d874269ec3",
-			"rawModeData": "{\n\t\"content\": \"Fourth message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"Fourth review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -1372,9 +1372,9 @@
 							"    }",
 							"}",
 							"",
-							"tests[\"Missing email message present\"] = foundEmail === true;",
-							"tests[\"Missing lastName message present\"] = foundLastName === true;",
-							"tests[\"Missing role message present\"] = foundRole === true;"
+							"tests[\"Missing email review present\"] = foundEmail === true;",
+							"tests[\"Missing lastName review present\"] = foundLastName === true;",
+							"tests[\"Missing role review present\"] = foundRole === true;"
 						],
 						"type": "text/javascript"
 					}
@@ -1431,9 +1431,9 @@
 							"    }",
 							"}",
 							"",
-							"tests[\"Missing email message present\"] = foundEmail === true;",
-							"tests[\"Missing lastName message present\"] = foundLastName === true;",
-							"tests[\"Missing role message present\"] = foundRole === true;"
+							"tests[\"Missing email review present\"] = foundEmail === true;",
+							"tests[\"Missing lastName review present\"] = foundLastName === true;",
+							"tests[\"Missing role review present\"] = foundRole === true;"
 						],
 						"type": "text/javascript"
 					}
@@ -1533,7 +1533,7 @@
 				}
 			],
 			"folder": "3aad129f-eb5d-4d47-86c9-e1edbb6a7634",
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -1637,10 +1637,10 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Correct num messages found\"] = jsonData.length === 3;",
-							"tests[\"Correct content found\"] = jsonData[0][\"content\"] === \"First message\"",
-							"tests[\"Correct content found\"] = jsonData[1][\"content\"] === \"Second message\"",
-							"tests[\"Correct content found\"] = jsonData[2][\"content\"] === \"Third message\""
+							"tests[\"Correct num reviews found\"] = jsonData.length === 3;",
+							"tests[\"Correct content found\"] = jsonData[0][\"content\"] === \"First review\"",
+							"tests[\"Correct content found\"] = jsonData[1][\"content\"] === \"Second review\"",
+							"tests[\"Correct content found\"] = jsonData[2][\"content\"] === \"Third review\""
 						],
 						"type": "text/javascript"
 					}
@@ -1650,7 +1650,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -1691,12 +1691,12 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Correct num messages found\"] = jsonData.length === 5;",
-							"tests[\"Correct content found: 1\"] = jsonData[0][\"content\"] === \"First message\"",
-							"tests[\"Correct content found: 2\"] = jsonData[1][\"content\"] === \"Second message\"",
-							"tests[\"Correct content found: 3\"] = jsonData[2][\"content\"] === \"Third message\"",
-							"tests[\"Correct content found: 4\"] = jsonData[3][\"content\"] === \"Fourth message\"",
-							"tests[\"Correct content found: 5\"] = jsonData[4][\"content\"] === \"Fifth message\""
+							"tests[\"Correct num reviews found\"] = jsonData.length === 5;",
+							"tests[\"Correct content found: 1\"] = jsonData[0][\"content\"] === \"First review\"",
+							"tests[\"Correct content found: 2\"] = jsonData[1][\"content\"] === \"Second review\"",
+							"tests[\"Correct content found: 3\"] = jsonData[2][\"content\"] === \"Third review\"",
+							"tests[\"Correct content found: 4\"] = jsonData[3][\"content\"] === \"Fourth review\"",
+							"tests[\"Correct content found: 5\"] = jsonData[4][\"content\"] === \"Fifth review\""
 						],
 						"type": "text/javascript"
 					}
@@ -1706,7 +1706,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -1848,7 +1848,7 @@
 		},
 		{
 			"id": "5432139e-5109-411c-8d92-83c2a1bfeaa7",
-			"name": "Check nonexistent message details",
+			"name": "Check nonexistent review details",
 			"url": "{{url}}/Revs/-1",
 			"description": "",
 			"data": [],
@@ -1886,7 +1886,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -1995,7 +1995,7 @@
 				}
 			],
 			"folder": "3f40f3cb-a9bc-40ab-8e24-e6d874269ec3",
-			"rawModeData": "{\n\t\"content\": \"Third message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"Third review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -2078,7 +2078,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -2124,7 +2124,7 @@
 		},
 		{
 			"id": "5b743c97-e27b-43a4-baf3-ad6415e7b082",
-			"name": "Check empty message details Copy",
+			"name": "Check empty review details Copy",
 			"url": "{{url}}/Revs/",
 			"description": "",
 			"data": [],
@@ -2160,7 +2160,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -2207,7 +2207,7 @@
 				}
 			],
 			"folder": "3f40f3cb-a9bc-40ab-8e24-e6d874269ec3",
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -2351,7 +2351,7 @@
 		},
 		{
 			"id": "6a6376c2-3b0f-4f71-b680-9fc512d5c9f6",
-			"name": "Check fifth message details",
+			"name": "Check fifth review details",
 			"url": "{{url}}/Revs/5",
 			"description": "",
 			"data": [],
@@ -2379,7 +2379,7 @@
 							"",
 							"var jsonData = JSON.parse(responseBody);",
 							"",
-							"tests[\"Correct content found\"] = jsonData[\"content\"] === \"Fifth message\"",
+							"tests[\"Correct content found\"] = jsonData[\"content\"] === \"Fifth review\"",
 							"tests[\"Correct email found\"] = jsonData[\"email\"] === \"UserB@domainB\"",
 							"",
 							""
@@ -2392,7 +2392,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -2448,7 +2448,7 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Correct content found\"] = jsonData[0][\"content\"] === \"First message\";",
+							"tests[\"Correct content found\"] = jsonData[0][\"content\"] === \"First review\";",
 							"tests[\"Correct id found\"] = jsonData[0][\"id\"] === 1;",
 							"tests[\"Correct email found\"] = jsonData[0][\"email\"] === \"UserA@domainA\";"
 						],
@@ -2460,7 +2460,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -2487,7 +2487,7 @@
 							"var jsonData = JSON.parse(responseBody);",
 							"tests[\"Correct title found\"] = jsonData[\"title\"] === \"My Restaurant\";",
 							"tests[\"Correct id found\"] = jsonData[\"id\"] === 1;",
-							"tests[\"Correct last message found\"] = jsonData[\"lastReview\"] === null;",
+							"tests[\"Correct last review found\"] = jsonData[\"lastReview\"] === null;",
 							"tests[\"Correct ownerId found\"] = jsonData[\"ownerId\"] === 2;"
 						],
 						"type": "text/javascript"
@@ -2683,7 +2683,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -2962,7 +2962,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -2989,7 +2989,7 @@
 							"var jsonData = JSON.parse(responseBody);",
 							"tests[\"Correct title found\"] = jsonData[0][\"title\"] === \"My Restaurant\";",
 							"tests[\"Correct id found\"] = jsonData[0][\"id\"] === 1;",
-							"tests[\"Correct last message found\"] = jsonData[0][\"lastReview\"] === null;",
+							"tests[\"Correct last review found\"] = jsonData[0][\"lastReview\"] === null;",
 							"tests[\"Correct ownerId found\"] = jsonData[0][\"ownerId\"] === 2;"
 						],
 						"type": "text/javascript"
@@ -3252,7 +3252,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -3432,7 +3432,7 @@
 		},
 		{
 			"id": "a3f3e6ae-9877-4098-9a41-49a9c14ad33a",
-			"name": "Check message details wo login",
+			"name": "Check review details wo login",
 			"url": "{{url}}/Revs/5",
 			"description": "",
 			"data": [],
@@ -3468,7 +3468,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -3592,8 +3592,8 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Correct num messages found\"] = jsonData.length === 1;",
-							"tests[\"Correct content found\"] = jsonData[0][\"content\"] === \"First message\""
+							"tests[\"Correct num reviews found\"] = jsonData.length === 1;",
+							"tests[\"Correct content found\"] = jsonData[0][\"content\"] === \"First review\""
 						],
 						"type": "text/javascript"
 					}
@@ -3603,7 +3603,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -3638,7 +3638,7 @@
 		},
 		{
 			"id": "b1e8c760-622a-4b57-a421-a0201751dc68",
-			"name": "Check empty message details",
+			"name": "Check empty review details",
 			"url": "{{url}}/Revs",
 			"description": "",
 			"data": [],
@@ -3674,7 +3674,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -4228,7 +4228,7 @@
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
-			"rawModeData": "{\n\t\"content\": \"First message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"First review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -4528,7 +4528,7 @@
 				}
 			],
 			"folder": "3f40f3cb-a9bc-40ab-8e24-e6d874269ec3",
-			"rawModeData": "{\n\t\"content\": \"Fifth message\"\n}",
+			"rawModeData": "{\n\t\"content\": \"Fifth review\"\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -4950,7 +4950,7 @@
 							"var jsonData = JSON.parse(responseBody);",
 							"tests[\"Correct title found\"] = jsonData[0][\"title\"] === \"My Restaurant\";",
 							"tests[\"Correct id found\"] = jsonData[0][\"id\"] === 1;",
-							"tests[\"Correct last message found\"] = jsonData[0][\"lastReview\"] === null;",
+							"tests[\"Correct last review found\"] = jsonData[0][\"lastReview\"] === null;",
 							"tests[\"Correct ownerId found\"] = jsonData[0][\"ownerId\"] === 2;"
 						],
 						"type": "text/javascript"
@@ -5179,7 +5179,7 @@
 							"var jsonData = JSON.parse(responseBody);",
 							"tests[\"Correct title found\"] = jsonData[\"title\"] === \"My Restaurant\";",
 							"tests[\"Correct id found\"] = jsonData[\"id\"] === 1;",
-							"tests[\"Correct last message found\"] = jsonData[\"lastReview\"] === null;",
+							"tests[\"Correct last review found\"] = jsonData[\"lastReview\"] === null;",
 							"tests[\"Correct ownerId found\"] = jsonData[\"ownerId\"] === 2;"
 						],
 						"type": "text/javascript"
@@ -5298,7 +5298,7 @@
 							"var jsonData = JSON.parse(responseBody);",
 							"tests[\"Correct title found\"] = jsonData[0][\"title\"] === \"My Restaurant\";",
 							"tests[\"Correct id found\"] = jsonData[0][\"id\"] === 1;",
-							"tests[\"Correct last message found\"] = jsonData[0][\"lastReview\"] === null;",
+							"tests[\"Correct last review found\"] = jsonData[0][\"lastReview\"] === null;",
 							"tests[\"Correct ownerId found\"] = jsonData[0][\"ownerId\"] === 2;"
 						],
 						"type": "text/javascript"

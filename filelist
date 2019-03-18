@@ -5,5 +5,5 @@ Routes/Session.js
 Routes/Validator.js
 Routes/Account/Prss.js
 Routes/Account/Ssns.js
-Routes/Conversation/Cnvs.js
-Routes/Conversation/Msgs.js
+Routes/Restaurant/Rsts.js
+Routes/Restaurant/Revs.js

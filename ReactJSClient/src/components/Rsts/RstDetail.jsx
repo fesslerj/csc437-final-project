@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col, Row, Button } from 'react-bootstrap';
-import MsgModal from '../Msgs/MsgModal';
+import RevModal from '../Revs/RevModal';
 
-export default class CnvDetail extends Component {
+export default class RstDetail extends Component {
    constructor(props) {
       super(props);
 
       let matchId = this.props.match.params.id;
-      let myCnv = null;
+      let myRst = null;
 
       if (typeof(matchId) === 'string' && /^\d+$/.test(matchId))
          matchId = parseInt(matchId, 10);
 
-      myCnv = this.props.Cnvs.find(cur => cur.id === matchId);
+      myRst = this.props.Rsts.find(cur => cur.id === matchId);
 
-      if (!myCnv) {
+      if (!myRst) {
          this.props.throwErr(
-          new Error('Error in component CnvDetail: Invalid Cnv ID'));
+          new Error('Error in component RstDetail: Invalid Rst ID'));
       }
       else {
-         this.props.updateMsgs(matchId);
+         this.props.updateRevs(matchId);
       }
 
       this.state = {
@@ -36,22 +36,22 @@ export default class CnvDetail extends Component {
    modalDismiss = (result) => {
       if (result.status === "Ok") {
          // do something here
-         this.newMsg(result);
+         this.newRev(result);
       }
       this.setState({ showModal: false });
    }
  
-   newMsg(result) {
+   newRev(result) {
       let matchId = this.props.match.params.id;
       
       if (typeof(matchId) === 'string' && /^\d+$/.test(matchId))
          matchId = parseInt(matchId, 10);
 
-      this.props.addMsg(matchId, { content: result.content });
+      this.props.addRev(matchId, { content: result.content });
    }
 
-   openConfirmation = (cnv) => {
-      this.setState({ delCnv: cnv, showConfirmation: true })
+   openConfirmation = (rst) => {
+      this.setState({ delRst: rst, showConfirmation: true })
    }
 
    closeConfirmation = (res) => {
@@ -60,49 +60,49 @@ export default class CnvDetail extends Component {
  
    render() {
       let matchId = this.props.match.params.id;
-      let myCnv = null;
+      let myRst = null;
 
       if (typeof(matchId) === 'string' && /^\d+$/.test(matchId))
          matchId = parseInt(matchId, 10);
 
-      myCnv = this.props.Cnvs.find(cur => cur.id === matchId);
+      myRst = this.props.Rsts.find(cur => cur.id === matchId);
 
 
-      var msgItems = [];
+      var revItems = [];
  
-      if (myCnv && this.props.Msgs.hasOwnProperty(myCnv.id)) {
-         this.props.Msgs[myCnv.id].forEach(msg => {
-            msgItems.push(<MsgItem
-               key={msg.id}
-               id={msg.id}
-               email={msg.email}
-               whenMade={msg.whenMade}
-               content={msg.content} />);
+      if (myRst && this.props.Revs.hasOwnProperty(myRst.id)) {
+         this.props.Revs[myRst.id].forEach(rev => {
+            revItems.push(<RevItem
+               key={rev.id}
+               id={rev.id}
+               email={rev.email}
+               whenMade={rev.whenMade}
+               content={rev.content} />);
          });
       }
 
       return (
          <section className="container">
-            <h1>{(myCnv && myCnv.title) || ''}</h1>
+            <h1>{(myRst && myRst.title) || ''}</h1>
             <ListGroup>
-               {msgItems}
+               {revItems}
             </ListGroup>
             <Button bsStyle="primary" onClick={() => this.openModal()}>
-               New Message
+               New Review
             </Button>
-            {/* Modal for creating and change cnv */}
-            <MsgModal
+            {/* Modal for creating and change rst */}
+            <RevModal
                showModal={this.state.showModal}
-               title={"New Message"}
-               msg={null}
+               title={"New Review"}
+               rev={null}
                onDismiss={this.modalDismiss} />
          </section>
       );
    }
 }
 
-// A Message list item
-const MsgItem = function (props) {
+// A Review list item
+const RevItem = function (props) {
    return (
       <ListGroupItem>
          <details open="true">
