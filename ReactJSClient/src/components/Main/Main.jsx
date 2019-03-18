@@ -11,6 +11,11 @@ var ProtectedRoute = ({component: Cmp, path, ...rest }) => {
       return Object.keys(rest.Prss).length !== 0 ?
       <Cmp {...rest} match={props.match} /> : <Redirect to='/signin'/>;}}/>);
    };
+
+var OpenRoute = ({component: Cmp, path, ...rest }) => {
+   return (<Route path={path} render={(props) => {
+      return <Cmp {...rest} match={props.match} />}}/>);
+   };
    
 class Main extends Component {
    
@@ -49,6 +54,19 @@ class Main extends Component {
                            ]
                            :
                            [
+                              <LinkContainer key={"all"} to="/allRsts">
+                                 <NavItem>All Restaurants</NavItem>
+                              </LinkContainer>
+                           ]
+                        }
+                     </Nav>
+                     <Nav pullRight>
+                        {this.signedIn() ?
+                              <LinkContainer key={0} to="/signout">
+                                 <NavItem>Sign Out</NavItem>
+                              </LinkContainer>
+                           :
+                           [
                               <LinkContainer key={0} to="/signin">
                                  <NavItem>Sign In</NavItem>
                               </LinkContainer>,
@@ -56,21 +74,11 @@ class Main extends Component {
                                  <NavItem>
                                     Register
                                </NavItem>
-                              </LinkContainer>,
+                              </LinkContainer>
                            ]
                         }
                      </Nav>
-                     {this.signedIn() ?
-                        <Nav pullRight>
-                           <NavItem eventKey={1}
-                              onClick={() => this.props.signOut()}
-                           >
-                              Sign out
-                           </NavItem>
-                        </Nav>
-                        :
-                        ''
-                     }
+                     
                   </Navbar.Collapse>
                </Navbar>
             </div>
@@ -78,21 +86,20 @@ class Main extends Component {
             {/*Alternate pages beneath navbar, based on current route*/}
             <Switch>
                <Route exact path='/'
-                  component={() => this.props.Prss ? <Redirect to="/allRsts" />
-                   : <Redirect to="/signin" />} />
+                  component={() => <Redirect to="/allRsts" />} />
                <Route path='/signout' component={() => {
                   this.props.signOut();
-                  return (<Redirect to="/" />);
+                  return (<Redirect to="/allRsts" />);
                }}/>
                <Route path='/signin' render={() => 
                   <SignIn {...this.props} />} />
                <Route path='/register'
                   render={() => <Register {...this.props} />} />
-               <ProtectedRoute path='/allRsts' component={RstOverview}
+               <OpenRoute path='/allRsts' component={RstOverview}
                   {...this.props}/>
                <ProtectedRoute path='/myRsts' component={RstOverview}
                   userOnly="true" {...this.props}/>
-               <ProtectedRoute path='/RstDetail/:id' component={RstDetail}
+               <OpenRoute path='/RstDetail/:id' component={RstDetail}
                   {...this.props}/>
                
                

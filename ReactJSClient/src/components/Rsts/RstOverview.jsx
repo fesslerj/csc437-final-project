@@ -79,7 +79,7 @@ export default class RstOverview extends Component {
             <ListGroup>
                {rstItems}
             </ListGroup>
-            <Button bsStyle="primary" onClick={() => this.openModal()}>
+            <Button bsStyle={this.props.Prss.id ? "primary" : "primary hidden"} onClick={() => this.openModal()}>
                New Restaurant
             </Button>
             {/* Modal for creating and change rst */}

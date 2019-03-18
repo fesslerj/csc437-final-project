@@ -87,7 +87,7 @@ export default class RstDetail extends Component {
             <ListGroup>
                {revItems}
             </ListGroup>
-            <Button bsStyle="primary" onClick={() => this.openModal()}>
+            <Button bsStyle={this.props.Prss.id ? "primary" : "primary hidden"} onClick={() => this.openModal()}>
                New Review
             </Button>
             {/* Modal for creating and change rst */}

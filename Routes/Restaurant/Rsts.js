@@ -24,15 +24,13 @@ router.get('/', function(req, res) {
 
    async.waterfall([
    function(cb) {
-      if (vld.checkLoggedIn(cb)) {
-         if (req.query.owner) {
-            req.cnn.chkQry('select id, title, ownerId, lastReview from '
-             + 'Restaurant where ownerId = ?', [req.query.owner], cb);
-         }
-         else {
-            req.cnn.chkQry('select id, title, ownerId, lastReview from '
-             + 'Restaurant', cb);
-         }
+      if (req.query.owner && vld.checkLoggedIn(cb)) {
+         req.cnn.chkQry('select id, title, ownerId, lastReview from '
+            + 'Restaurant where ownerId = ?', [req.query.owner], cb);
+      }
+      else {
+         req.cnn.chkQry('select id, title, ownerId, lastReview from '
+          + 'Restaurant', cb);
       }
    },
    function(rsts, fields, cb) {
@@ -81,8 +79,7 @@ router.get('/:rstId', function(req, res) {
 
    async.waterfall([
    function(cb) {
-      vld.checkLoggedIn(cb)
-       && vld.check(/^\d+$/.test(req.params.rstId), Tags.notFound, null, cb)
+       vld.check(/^\d+$/.test(req.params.rstId), Tags.notFound, null, cb)
        && req.cnn.chkQry('select id, title, ownerId, lastReview from '
        + 'Restaurant where id = ?', [req.params.rstId], cb);
    },
@@ -97,7 +94,7 @@ router.get('/:rstId', function(req, res) {
    }],
 
    function(err) {
-      req.cnn.release();
+      cnn.release();
    });
 });
 
@@ -183,8 +180,7 @@ router.get('/:rstId/Revs', function(req, res) {
 
    async.waterfall([
    function(cb) {  // Check for existence of restaurant
-      vld.checkLoggedIn(cb)
-       && cnn.chkQry('select * from Restaurant where id = ?', [rstId], cb);
+       cnn.chkQry('select * from Restaurant where id = ?', [rstId], cb);
    },
    function(rsts, fields, cb) { // Get indicated reviews
       console.log(' [][] RSTS/REV GET - callback 2! rsts found = '

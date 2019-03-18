@@ -14,8 +14,7 @@ router.get('/:revId', function(req, res) {
 
    async.waterfall([
    function(cb) {
-      vld.checkLoggedIn(cb)
-       && cnn.chkQry(query, [req.params.revId], cb);
+      cnn.chkQry(query, [req.params.revId], cb);
    },
    function(revs, fields, cb) {
       if (vld.check(revs.length, Tags.notFound, null, cb)) {
