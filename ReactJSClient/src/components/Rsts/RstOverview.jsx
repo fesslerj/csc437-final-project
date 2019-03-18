@@ -36,13 +36,15 @@ export default class RstOverview extends Component {
    }
 
    modRst(result) {
-      this.props.modRst(this.state.editRst.id, result.title, result.url, result.description);
+      this.props.modRst(this.state.editRst.id, result.title, result.url, 
+       result.description, result.category);
    }
 
    newRst(result) {
       this.props.addRst({ 
          title: result.title || null,
          url: result.url || null,
+         category: result.category || null,
          description: result.description || null
       });
    }

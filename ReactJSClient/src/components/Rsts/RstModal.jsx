@@ -9,7 +9,8 @@ export default class RstModal extends Component {
       this.state = {
          rstTitle: (this.props.rst && this.props.rst.title) || "",
          rstURL: (this.props.rst && this.props.rst.url) || "",
-         rstDescription: (this.props.rst && this.props.rst.description) || ""
+         rstDescription: (this.props.rst && this.props.rst.description) || "",
+         rstCategory: (this.props.rst && this.props.rst.category) || "",
       }
    }
 
@@ -18,7 +19,8 @@ export default class RstModal extends Component {
          status: result,
          title: this.state.rstTitle,
          url: this.state.rstURL,
-         description: this.state.rstDescription
+         description: this.state.rstDescription,
+         category: this.state.rstCategory
       });
    }
 
@@ -41,11 +43,16 @@ export default class RstModal extends Component {
       this.setState({ rstDescription: e.target.value });
    }
 
+   handleCategoryChange = (e) => {
+      this.setState({rstCategory: e.target.value});
+   }
+
    componentWillReceiveProps = (nextProps) => {
       if (nextProps.showModal) {
          this.setState({
             rstTitle: (nextProps.rst && nextProps.rst.title) || "",
             rstURL: (nextProps.rst && nextProps.rst.url) || "",
+            rstCategory: (nextProps.rst && nextProps.rst.description) || "",
             rstDescription: (nextProps.rst && nextProps.rst.description) || ""
          });
       }
@@ -79,6 +86,24 @@ export default class RstModal extends Component {
                         placeholder="https://patspastries.com"
                         onChange={this.handleURLChange}
                      />
+                     <ControlLabel>Restaurant Category*</ControlLabel>
+                     <FormControl componentClass="select" 
+                        onChange={this.handleCategoryChange} defaultValue={this.state.rstCategory}>
+                        <option>Bakery</option>
+                        <option>Barbeque</option>
+                        <option>Chinese</option>
+                        <option>Deli</option>
+                        <option>Fine Dining</option>
+                        <option>Ice Cream</option>
+                        <option>Seafood</option>
+                        <option>Vegetarian</option>
+                        <option>Breakfast</option>
+                        <option>Burgers</option>
+                        <option>Coffee</option>
+                        <option>Italian</option>
+                        <option>Sandwiches</option>
+                        <option>Pizza</option>
+                     </FormControl>
                      <ControlLabel>Restaurant Description</ControlLabel>
                      <FormControl
                         componentClass="textarea"
