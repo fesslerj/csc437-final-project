@@ -83,7 +83,15 @@ export default class RstDetail extends Component {
 
       return (
          <section className="container">
-            <h1>{(myRst && myRst.title) || ''}</h1>
+            <h1>{(myRst && myRst.title) || ''} <small class="text-muted">{(myRst && myRst.category) || ''}</small></h1>
+            <h4>
+               <a href={(myRst && myRst.url) ? 
+                (myRst.url.indexOf("http://") === 0 || myRst.url.indexOf("https://") === 0 
+                ? myRst.url : 'http://' + myRst.url) : ''} target="_blank"  rel="noopener noreferrer">
+                  {(myRst && myRst.url) || ''}
+               </a>
+            </h4>
+            <p>{(myRst && myRst.description) || ''}</p>
             <ListGroup>
                {revItems}
             </ListGroup>

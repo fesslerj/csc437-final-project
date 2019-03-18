@@ -18,6 +18,9 @@ create table Restaurant (
    id int auto_increment primary key,
    ownerId int,
    title varchar(80) not null,
+   description varchar(300),
+   url varchar(80) not null,
+   category varchar(80) not null,
    lastReview datetime,
    constraint FKReview_ownerId foreign key (ownerId) references Person(id)
     on delete cascade,
@@ -30,6 +33,10 @@ create table Review (
    prsId int not null,
    whenMade datetime not null,
    content varchar(5000) not null,
+   rating int,
+   numUpvotes int,
+   ownerResponseWhenMade datetime,
+   ownerResponseContent varchar(5000),
    constraint FKReview_rstId foreign key (rstId) references Restaurant(id)
     on delete cascade,
    constraint FKReview_prsId foreign key (prsId) references Person(id)

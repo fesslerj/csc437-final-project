@@ -12,6 +12,9 @@ var errNotFound = 404;
 var errServer = 500;
 
 var rstTitleMaxLength = 80;
+var rstDescriptionMaxLength = 300;
+var rstURLMaxLength = 80;
+var rstCategoryMaxLength = 80;
 var revContentMaxLength = 5000;
 var baseTen = 10;
 
@@ -25,11 +28,11 @@ router.get('/', function(req, res) {
    async.waterfall([
    function(cb) {
       if (req.query.owner && vld.checkLoggedIn(cb)) {
-         req.cnn.chkQry('select id, title, ownerId, lastReview from '
+         req.cnn.chkQry('select id, title, ownerId, category, url, description, lastReview from '
             + 'Restaurant where ownerId = ?', [req.query.owner], cb);
       }
       else {
-         req.cnn.chkQry('select id, title, ownerId, lastReview from '
+         req.cnn.chkQry('select id, title, ownerId, category, url, description, lastReview from '
           + 'Restaurant', cb);
       }
    },
@@ -52,17 +55,27 @@ router.post('/', function(req, res) {
    async.waterfall([
    function(cb) {
       vld.checkLoggedIn(cb)
-       && vld.hasFields(body, ["title"], cb)
+       && vld.hasFields(body, ["title", "url", "category"], cb)
        && vld.check(typeof(body.title) === 'string'
        && body.title.length <= rstTitleMaxLength,
        Tags.badValue, ["title"], cb)
+       && vld.check(typeof(body.url) === 'string'
+       && body.url.length <= rstURLMaxLength,
+       Tags.badValue, ["url"], cb)
+       && vld.check(typeof(body.category) === 'string'
+       && body.category.length <= rstCategoryMaxLength,
+       Tags.badValue, ["category"], cb)
+       && !body.description || (vld.check(typeof(body.description) === 'string'
+       && body.description.length <= rstDescriptionMaxLength,
+       Tags.badValue, ["description"], cb))
        && cnn.chkQry('select * from Restaurant where title = ?', 
        body.title, cb);
    },
    function(existingRst, fields, cb) {
       vld.check(!existingRst.length, Tags.dupTitle, null, cb)
        && cnn.chkQry("insert into Restaurant set ?",
-       {title: body.title, ownerId: req.session.id}, cb);
+       {title: body.title, url: body.url, category: body.category, 
+         description: body.description || "", ownerId: req.session.id}, cb);
    },
    function(insRes, fields, cb) {
       res.location(router.baseURL + '/' + insRes.insertId).end();
@@ -80,7 +93,7 @@ router.get('/:rstId', function(req, res) {
    async.waterfall([
    function(cb) {
        vld.check(/^\d+$/.test(req.params.rstId), Tags.notFound, null, cb)
-       && req.cnn.chkQry('select id, title, ownerId, lastReview from '
+       && req.cnn.chkQry('select id, title, ownerId, category, url, description, lastReview from '
        + 'Restaurant where id = ?', [req.params.rstId], cb);
    },
    function(rsts, fields, cb) {

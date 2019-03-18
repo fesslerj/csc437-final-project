@@ -81,7 +81,7 @@ export default class RstOverview extends Component {
 
       return (
          <section className="container">
-            <h1>Rst Overview</h1>
+            <h1>Radical Restaurants</h1>
             <ListGroup>
                {rstItems}
             </ListGroup>

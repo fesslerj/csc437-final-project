@@ -10,7 +10,7 @@ export default class RstModal extends Component {
          rstTitle: (this.props.rst && this.props.rst.title) || "",
          rstURL: (this.props.rst && this.props.rst.url) || "",
          rstDescription: (this.props.rst && this.props.rst.description) || "",
-         rstCategory: (this.props.rst && this.props.rst.category) || "",
+         rstCategory: (this.props.rst && this.props.rst.category) || "Bakery",
       }
    }
 
@@ -52,7 +52,7 @@ export default class RstModal extends Component {
          this.setState({
             rstTitle: (nextProps.rst && nextProps.rst.title) || "",
             rstURL: (nextProps.rst && nextProps.rst.url) || "",
-            rstCategory: (nextProps.rst && nextProps.rst.description) || "",
+            rstCategory: (nextProps.rst && nextProps.rst.category) || "Bakery",
             rstDescription: (nextProps.rst && nextProps.rst.description) || ""
          });
       }
