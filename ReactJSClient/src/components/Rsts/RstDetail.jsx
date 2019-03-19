@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col, Row, Button } from 'react-bootstrap';
 import RevModal from '../Revs/RevModal';
+import Rating from 'react-rating';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
+import { faSortUp as upVote } from '@fortawesome/free-solid-svg-icons' 
+import { faSortDown as downVote } from '@fortawesome/free-solid-svg-icons' 
+import "./RstDetail.css"
 
 export default class RstDetail extends Component {
    constructor(props) {
@@ -47,7 +54,7 @@ export default class RstDetail extends Component {
       if (typeof(matchId) === 'string' && /^\d+$/.test(matchId))
          matchId = parseInt(matchId, 10);
 
-      this.props.addRev(matchId, { content: result.content, rating: result.rating });
+      this.props.addRev(matchId, { title: result.title, content: result.content, rating: parseInt(result.rating, 10) });
    }
 
    openConfirmation = (rst) => {
@@ -56,6 +63,14 @@ export default class RstDetail extends Component {
 
    closeConfirmation = (res) => {
       this.setState({showConfirmation: false});
+   }
+
+   handleUpVoteClick = (reviewId) => {
+      // TODO: Integrate upvotes
+   }
+
+   handleDownVoteClick = (reviewId) => {
+      // TODO: Integrate downvotes
    }
  
    render() {
@@ -77,7 +92,14 @@ export default class RstDetail extends Component {
                id={rev.id}
                email={rev.email}
                whenMade={rev.whenMade}
-               content={rev.content} />);
+               content={rev.content}
+               title={rev.title}
+               rating={rev.rating}
+               upVotes={rev.upVotes || 0}
+               auVote={rev.auVote || 0}
+               name={rev.firstName + " " + rev.lastName}
+               handleUpVote={() => this.handleUpVoteClick(rev.id)}
+               handleDownVote={() => this.handleDownVoteClick(rev.id)} />);
          });
       }
 
@@ -113,22 +135,62 @@ export default class RstDetail extends Component {
 const RevItem = function (props) {
    return (
       <ListGroupItem>
-         <details open="true">
-            <summary>
-               <Row>
-                  <Col sm={4}>{props.email}</Col>
-                  <Col sm={4}>{new Intl.DateTimeFormat('us',
-                     {
-                        year: "numeric", month: "short", day: "numeric",
-                        hour: "2-digit", minute: "2-digit", second: "2-digit"
-                     })
-                     .format(new Date(props.whenMade))}</Col>
-               </Row>
-            </summary>
-            <div>
-               {props.content}
-            </div>
-         </details>
+         <section className="container">
+            <Row>
+               <Col sm={1} style={{paddingRight: "0px"}}>
+                  <Row>
+                        <FontAwesomeIcon 
+                           onClick={props.handleUpVote}
+                           style={{padding: "0px", marginBottom: "-25px"}} 
+                           icon={upVote} 
+                           color={props.auVote === 1 ? "green" : ""}
+                           size="5x"/>
+                  </Row>
+                  <Row>
+                     <h4 style={
+                           {padding: "0px", margin: "0px", marginTop: "-5px", 
+                           marginBottom: "-5px", paddingLeft: "16.5px"}}>
+                        {props.upVotes}
+                     </h4>
+                  </Row>
+                  <Row>
+                     <FontAwesomeIcon 
+                     onClick={props.handleDownVote}
+                     class="DownVoteButton"
+                     className="DownVoteButton"
+                     style={{padding: "0px", marginTop: "-25px", marginBottom: "-10px"}} 
+                     icon={downVote} 
+                     size="5x"/>
+                  </Row>
+               </Col>
+               <Col sm={2} style={{paddingLeft: "0px"}}>
+                  <Row>
+                     <Rating 
+                        emptySymbol={<FontAwesomeIcon icon={farStar} size="lg"/>}
+                        fullSymbol={<FontAwesomeIcon icon={fasStar} size="lg" color="gold" />}
+                        initialRating={props.rating}
+                        readonly={true}
+                     />
+                     <p>{props.name}<br></br><a href={"mailto:" + props.email}>{props.email}</a></p>
+                  </Row>
+               </Col>
+               <Col sm={9} style={{paddingLeft: "0px"}}>
+                  <Row>
+                     <h3 style={{padding: "0px", margin: "0px"}}>
+                        {props.title}
+                     </h3>
+                     <p style={{color: "gray", marginBottom: "0px"}}>{new Intl.DateTimeFormat('us',
+                        {
+                           year: "numeric", month: "short", day: "numeric"
+                        })
+                        .format(new Date(props.whenMade))}</p>
+                     <p style={{padding: "0px", margin: "0px"}}>
+                        {props.content}
+                     </p>
+                  </Row>
+               </Col>
+            </Row>
+         </section>
       </ListGroupItem>
    )
 }

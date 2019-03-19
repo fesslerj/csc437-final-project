@@ -79,14 +79,14 @@ export default class RstModal extends Component {
                         placeholder="Pat's Phenomenal Pastries"
                         onChange={this.handleTitleChange}
                      />
-                     <ControlLabel>Restaurant URL*</ControlLabel>
+                     <ControlLabel style={{marginTop: "15px"}}>Restaurant URL*</ControlLabel>
                      <FormControl
                         type="text"
                         value={this.state.rstURL}
                         placeholder="https://patspastries.com"
                         onChange={this.handleURLChange}
                      />
-                     <ControlLabel>Restaurant Category*</ControlLabel>
+                     <ControlLabel style={{marginTop: "15px"}}>Restaurant Category*</ControlLabel>
                      <FormControl componentClass="select" 
                         onChange={this.handleCategoryChange} defaultValue={this.state.rstCategory}>
                         <option>Bakery</option>
@@ -104,7 +104,7 @@ export default class RstModal extends Component {
                         <option>Sandwiches</option>
                         <option>Pizza</option>
                      </FormControl>
-                     <ControlLabel>Restaurant Description</ControlLabel>
+                     <ControlLabel style={{marginTop: "15px"}}>Restaurant Description</ControlLabel>
                      <FormControl
                         componentClass="textarea"
                         value={this.state.rstDescription}
@@ -112,7 +112,7 @@ export default class RstModal extends Component {
                         onChange={this.handleDescriptionChange}
                      />
                      <FormControl.Feedback />
-                     <HelpBlock>Title and URL can not be empty.</HelpBlock>
+                     {!this.getValidationState() ? "" : <HelpBlock>Title and URL can not be empty.</HelpBlock>}
                   </FormGroup>
                </form>
             </Modal.Body>
