@@ -3,6 +3,9 @@ import {
    Modal, Button, FormControl, ControlLabel, FormGroup, Glyphicon
 } from 'react-bootstrap';
 import Rating from 'react-rating';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
 
 export default class RevModal extends Component {
    constructor(props) {
@@ -60,8 +63,8 @@ export default class RevModal extends Component {
                      <ControlLabel>Review Content</ControlLabel>
                      <div>
                         <Rating 
-                           emptySymbol={<Glyphicon bsSize='large' glyph="star-empty"></Glyphicon>}
-                           fullSymbol={<Glyphicon bsSize='large' glyph="star"></Glyphicon>}
+                           emptySymbol={<FontAwesomeIcon icon={farStar} size="2x"/>}
+                           fullSymbol={<FontAwesomeIcon icon={fasStar} size="2x" color="gold" />}
                            initialRating={this.state.revRating}
                            onChange={this.handleStarChange}
                         />
