@@ -34,12 +34,22 @@ create table Review (
    whenMade datetime not null,
    content varchar(5000) not null,
    rating int,
-   numUpvotes int,
    ownerResponseWhenMade datetime,
    ownerResponseContent varchar(5000),
    constraint FKReview_rstId foreign key (rstId) references Restaurant(id)
     on delete cascade,
    constraint FKReview_prsId foreign key (prsId) references Person(id)
+    on delete cascade
+);
+
+create table Vote (
+   id int auto_increment primary key,
+   rstId int not null,
+   revId int not null,
+   voteValue tinyint not null,
+   constraint FKVote_rstId foreign key (rstId) references Restaurant(id)
+    on delete cascade,
+   constraint FKVote_revId foreign key (revId) references Review(id)
     on delete cascade
 );
 
