@@ -16,7 +16,8 @@ function mapStateToProps(state) {
       Prss: state.Prss,
       Rsts: state.Rsts,
       Revs: state.Revs,
-      Errs: state.Errs
+      Errs: state.Errs,
+      Vots: state.Vots
    };
 }
 

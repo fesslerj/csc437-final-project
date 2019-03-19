@@ -26,7 +26,19 @@ export default class RstDetail extends Component {
           new Error('Error in component RstDetail: Invalid Rst ID'));
       }
       else {
-         this.props.updateRevs(matchId);
+         this.props.updateRevs(matchId, undefined, undefined, () => {
+            let a_matchId = this.props.match.params.id;
+            let a_myRst = null;
+
+            if (typeof(a_matchId) === 'string' && /^\d+$/.test(a_matchId))
+            a_matchId = parseInt(a_matchId, 10);
+
+            a_myRst = this.props.Rsts.find(cur => cur.id === a_matchId);
+
+            if (a_myRst && this.props.Revs.hasOwnProperty(a_myRst.id)) {
+               this.props.Revs[a_myRst.id].forEach(rev => this.props.updateVot(rev.id, this.props.Prss.id));
+            }
+         });
       }
 
       this.state = {
@@ -87,6 +99,7 @@ export default class RstDetail extends Component {
  
       if (myRst && this.props.Revs.hasOwnProperty(myRst.id)) {
          this.props.Revs[myRst.id].forEach(rev => {
+            let myVot = this.props.Vots[rev.id] || 0;
             revItems.push(<RevItem
                key={rev.id}
                id={rev.id}
@@ -95,8 +108,8 @@ export default class RstDetail extends Component {
                content={rev.content}
                title={rev.title}
                rating={rev.rating}
-               upVotes={rev.upVotes || 0}
-               auVote={rev.auVote || 0}
+               upVotes={rev.numUpvotes || 0}
+               auVote={myVot}
                name={rev.firstName + " " + rev.lastName}
                handleUpVote={() => this.handleUpVoteClick(rev.id)}
                handleDownVote={() => this.handleDownVoteClick(rev.id)} />);

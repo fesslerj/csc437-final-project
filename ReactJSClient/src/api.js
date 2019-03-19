@@ -283,7 +283,7 @@ export function getVot(revId, userId) {
       if (err instanceof FetchError || err.prototype === FetchError
        || err.name === 'FetchError') {
          if (err.statusCode === 400 && err.jsonErrorTags
-          && err.jsonErrorTags[0] === 'notFound') {
+          && err.jsonErrorTags[0] === errorTranslate('notFound')) {
             // 400 tag=notFound: return zero vote
             return {
                jsonBody: {
