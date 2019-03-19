@@ -12,7 +12,7 @@ var getBin = function(count, sum) {
    count = count || 0;
    sum = sum || 0;
 
-   ramp = (count < 0 ? 0 : (count > 10 ? 10 : count)) / 10.0;
+   ramp = (count < 1 ? 1 : (count > 10 ? 10 : count)) / 10.0;
 
    if (!count && !sum)
       count = 1;
