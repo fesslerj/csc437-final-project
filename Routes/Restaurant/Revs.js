@@ -8,9 +8,9 @@ router.baseURL = '/Revs';
 router.get('/:revId', function(req, res) {
    var vld = req.validator;
    var cnn = req.cnn;
-   var query = 'select m.whenMade, p.email, m.content from Review m'
-   + ' join Person p on m.prsId = p.id'
-   + ' where m.id = ?';
+   var query = 'select r.id, p.firstName, p.lastName, r.whenMade, p.email, r.content, r.title, r.rating from Review r'
+   + ' join Person p on r.prsId = p.id'
+   + ' where r.id = ?';
 
    async.waterfall([
    function(cb) {

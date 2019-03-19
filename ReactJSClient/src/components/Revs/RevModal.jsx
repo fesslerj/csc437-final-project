@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import {
-   Modal, Button, FormControl, ControlLabel, FormGroup, Glyphicon
+   Modal, Button, FormControl, ControlLabel, FormGroup, HelpBlock
 } from 'react-bootstrap';
 import Rating from 'react-rating';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
 
 export default class RevModal extends Component {
    constructor(props) {
       super(props);
       this.state = {
+         revTitle: (this.props.rev && this.props.rev.title) || "",
          revContent: (this.props.rev && this.props.rev.content) || "",
          revRating: ""
       }
@@ -18,17 +22,25 @@ export default class RevModal extends Component {
    close = (result) => {
       this.props.onDismiss && this.props.onDismiss({
          status: result,
+         title: this.state.revTitle,
          content: this.state.revContent,
          rating: this.state.revRating
       });
    }
 
    getValidationState = () => {
-      return null;
+      if (this.state.revTitle && this.state.revRating && this.state.revContent) {
+         return null
+      }
+      return "warning";
    }
 
-   handleChange = (e) => {
+   handleBodyChange = (e) => {
       this.setState({ revContent: e.target.value });
+   }
+
+   handleTitleChange = (e) => {
+      this.setState({ revTitle: e.target.value });
    }
 
    handleStarChange = (value) => {
@@ -37,8 +49,12 @@ export default class RevModal extends Component {
 
    componentWillReceiveProps = (nextProps) => {
       if (nextProps.showModal) {
-         this.setState({ revContent: (nextProps.rev && nextProps.rev.content)
-          || "" , revRating: ""})
+         this.setState({
+            revTitle: (nextProps.rev && nextProps.rev.title) || "",
+            revContent: (nextProps.rev && nextProps.rev.content) || "",
+            revRating: (nextProps.rev && nextProps.rev.rating) || "",
+
+         })
       }
    }
 
@@ -57,23 +73,31 @@ export default class RevModal extends Component {
                   <FormGroup controlId="formBasicText"
                    validationState={this.getValidationState()}
                   >
-                     <ControlLabel>Review Content</ControlLabel>
-                     <div>
+                     <ControlLabel>Review Title*</ControlLabel>
+                     <FormControl
+                        type="text"
+                        value={this.state.revTitle}
+                        placeholder="Example: I loved it!!"
+                        onChange={this.handleTitleChange}
+                     />
+                     <ControlLabel style={{marginTop: "15px"}}>Review Body*</ControlLabel>
+                     <FormControl
+                        style={{height: "20em"}}
+                        componentClass="textarea"
+                        value={this.state.revContent}
+                        placeholder="Enter text"
+                        onChange={this.handleBodyChange}
+                     />
+                     <div style={{marginTop: "15px"}}>
                         <Rating 
-                           emptySymbol={<Glyphicon bsSize='large' glyph="star-empty"></Glyphicon>}
-                           fullSymbol={<Glyphicon bsSize='large' glyph="star"></Glyphicon>}
+                           emptySymbol={<FontAwesomeIcon icon={farStar} size="2x"/>}
+                           fullSymbol={<FontAwesomeIcon icon={fasStar} size="2x" color="gold" />}
                            initialRating={this.state.revRating}
                            onChange={this.handleStarChange}
                         />
                      </div>
-                     <FormControl
-                        componentClass="textarea"
-                        value={this.state.revContent}
-                        placeholder="Enter text"
-                        onChange={this.handleChange}
-                     />
-                     
                      <FormControl.Feedback />
+                     {!this.getValidationState() ? "": <HelpBlock style={{marginTop: "15px"}}>All fields, including star-rating, are required.</HelpBlock>}
                   </FormGroup>
                </form>
             </Modal.Body>

@@ -16,6 +16,7 @@ var rstDescriptionMaxLength = 300;
 var rstURLMaxLength = 80;
 var rstCategoryMaxLength = 80;
 var revContentMaxLength = 5000;
+var revTitleMaxLength = 80;
 var baseTen = 10;
 
 
@@ -168,10 +169,10 @@ router.get('/:rstId/Revs', function(req, res) {
    var vld = req.validator;
    var rstId = req.params.rstId;
    var cnn = req.cnn;
-   var myQueryA = 'select m.id, m.whenMade, p.email, m.content from'
-    + ' Restaurant c join Review m on m.rstId = c.id join Person p on '
-    + 'm.prsId = p.id where c.id = ?';
-   var myQueryB = ' order by m.whenMade asc, m.id asc';
+   var myQueryA = 'select r.id, p.firstName, p.lastName, r.whenMade, p.email, r.content, r.title, r.rating from'
+    + ' Restaurant c join Review r on r.rstId = c.id join Person p on '
+    + 'r.prsId = p.id where c.id = ?';
+   var myQueryB = ' order by r.whenMade asc, r.id asc';
 
    // Some console logging for debgging purposes
    console.log("[[[[]]]]    [[[[]]]]   Handling RSTS/REV GET with RST id="
@@ -258,15 +259,17 @@ router.post('/:rstId/Revs', function(req, res){
    async.waterfall([
    function(cb) {
       console.log('REV POST :::: Callback #1 -- checking...');
-
       vld.checkLoggedIn(cb)
-       && vld.chain(!('content' in body)
-       || (typeof(body.content) === 'string'
-       && body.content.length <= revContentMaxLength),
-       Tags.badValue, ['content'])
-       .check(('content' in body) && body.content, Tags.missingField,
-       ['content'], cb)
-       && cnn.chkQry('select * from Restaurant where id = ?', [rstId], cb);
+         && vld.hasFields(body, ["title", "content", "rating"], cb)
+         && vld.check(typeof(body.title) === 'string'
+         && body.title.length <= revTitleMaxLength,
+         Tags.badValue, ["title"], cb)
+         && vld.check(typeof(body.content) === 'string'
+         && body.content.length <= revContentMaxLength,
+         Tags.badValue, ["content"], cb)
+         && vld.check(typeof(body.rating) === 'number',
+         Tags.badValue, ["rating"], cb)
+         && cnn.chkQry('select * from Restaurant where id = ?', [rstId], cb);
    },
    function(rsts, fields, cb) {
       console.log('REV POST <> callback 2! body.content=`'
@@ -280,8 +283,9 @@ router.post('/:rstId/Revs', function(req, res){
             rstId: rstId,
             prsId: req.session.id,
             whenMade: now = new Date(),
-            /* content not required, but must not be null */
-            content: body.content || ""
+            content: body.content,
+            rating: body.rating,
+            title: body.title
          },
        cb);
    },
