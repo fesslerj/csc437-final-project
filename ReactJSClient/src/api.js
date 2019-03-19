@@ -1,5 +1,6 @@
 import { fetchOK, expectArray, expectSingleton,
-   translateErrors } from './fetching'
+   translateErrors } from './fetching';
+import { FetchError } from './FetchError';
 
 // Orderly interface to the REST server, providing:
 // 1. Standard URL base
@@ -268,6 +269,34 @@ export function postRev(rstId, rev) {
     })
     .then(({jsonBody}) => Object.assign({}, jsonBody, { id: retRevId }));
 }
+
+
+/**
+ * Get the user's vote on a review
+ * @param {(number|string)} revId review id
+ * @param {(number|string)} userId user ID
+ * @returns {Promise<number>} resolves to 1/0/-1
+ */
+export function getVot(revId, userId) {
+   return get(`Vots/${revId}/${userId}`)
+    .catch(err => {
+      if (err instanceof FetchError || err.prototype === FetchError
+       || err.name === 'FetchError') {
+         if (err.statusCode === 400 && err.jsonErrorTags
+          && err.jsonErrorTags[0] === 'notFound') {
+            // 400 tag=notFound: return zero vote
+            return {
+               jsonBody: {
+                  voteValue: 0
+               }
+            };
+         }
+      }
+      throw err;
+    })
+    .then(({jsonBody}) => jsonBody.voteValue);
+}
+
 
 const errMap = {
     en: {
