@@ -169,7 +169,7 @@ router.get('/:rstId/Revs', function(req, res) {
    var vld = req.validator;
    var rstId = req.params.rstId;
    var cnn = req.cnn;
-   var myQueryA = 'select r.id, r.whenMade, p.email, r.content, r.title, r.rating from'
+   var myQueryA = 'select r.id, p.firstName, p.lastName, r.whenMade, p.email, r.content, r.title, r.rating from'
     + ' Restaurant c join Review r on r.rstId = c.id join Person p on '
     + 'r.prsId = p.id where c.id = ?';
    var myQueryB = ' order by r.whenMade asc, r.id asc';
