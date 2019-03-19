@@ -47,7 +47,7 @@ export default class RstDetail extends Component {
       if (typeof(matchId) === 'string' && /^\d+$/.test(matchId))
          matchId = parseInt(matchId, 10);
 
-      this.props.addRev(matchId, { content: result.content, rating: result.rating });
+      this.props.addRev(matchId, { title: result.title, content: result.content, rating: parseInt(result.rating) });
    }
 
    openConfirmation = (rst) => {
@@ -77,7 +77,9 @@ export default class RstDetail extends Component {
                id={rev.id}
                email={rev.email}
                whenMade={rev.whenMade}
-               content={rev.content} />);
+               content={rev.content}
+               title={rev.title}
+               rating={rev.rating} />);
          });
       }
 

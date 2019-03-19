@@ -32,9 +32,9 @@ create table Review (
    rstId int not null,
    prsId int not null,
    whenMade datetime not null,
-   title varchar (240) not null,
+   title varchar (80) not null,
    content varchar(5000) not null,
-   rating int,
+   rating int not null,
    ownerResponseWhenMade datetime,
    ownerResponseContent varchar(5000),
    constraint FKReview_rstId foreign key (rstId) references Restaurant(id)

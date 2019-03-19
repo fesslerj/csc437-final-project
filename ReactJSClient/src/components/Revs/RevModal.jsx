@@ -29,7 +29,7 @@ export default class RevModal extends Component {
    }
 
    getValidationState = () => {
-      if (this.state.revTitle && this.state.revRating) {
+      if (this.state.revTitle && this.state.revRating && this.state.revContent) {
          return null
       }
       return "warning";
@@ -73,14 +73,14 @@ export default class RevModal extends Component {
                   <FormGroup controlId="formBasicText"
                    validationState={this.getValidationState()}
                   >
-                     <ControlLabel>Review Title</ControlLabel>
+                     <ControlLabel>Review Title*</ControlLabel>
                      <FormControl
                         type="text"
                         value={this.state.revTitle}
                         placeholder="Example: I loved it!!"
                         onChange={this.handleTitleChange}
                      />
-                     <ControlLabel style={{marginTop: "15px"}}>Review Body</ControlLabel>
+                     <ControlLabel style={{marginTop: "15px"}}>Review Body*</ControlLabel>
                      <FormControl
                         style={{height: "20em"}}
                         componentClass="textarea"
@@ -97,7 +97,7 @@ export default class RevModal extends Component {
                         />
                      </div>
                      <FormControl.Feedback />
-                     {!this.getValidationState() ? "": <HelpBlock style={{marginTop: "15px"}}>Title and Star-Rating can not be empty.</HelpBlock>}
+                     {!this.getValidationState() ? "": <HelpBlock style={{marginTop: "15px"}}>All fields, including star-rating, are required.</HelpBlock>}
                   </FormGroup>
                </form>
             </Modal.Body>
