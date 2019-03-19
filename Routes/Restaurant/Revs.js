@@ -51,7 +51,7 @@ router.get('/:revId', function(req, res) {
       var weightedVotes = vots.reduce(Voting.WeightedVoteReducer, 1.0);
       var revObj = {
          rstId: revResult.rstId,
-         whenMade: revResult.rstId ? revResult.rstId.getTime() : 0,
+         whenMade: revResult.whenMade ? revResult.whenMade.getTime() : 0,
          firstName: revResult.firstName,
          lastName: revResult.lastName,
          email: revResult.email,
