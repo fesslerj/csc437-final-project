@@ -1,0 +1,9 @@
+.DownVoteButton {
+    background-color: "red";
+    color: "red";
+    currentColor: "red";
+}
+
+.faSortDown {
+    color: "red";
+}

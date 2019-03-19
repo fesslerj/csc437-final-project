@@ -5,6 +5,9 @@ import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
+import { faSortUp as upVote } from '@fortawesome/free-solid-svg-icons' 
+import { faSortDown as downVote } from '@fortawesome/free-solid-svg-icons' 
+import "./RstDetail.css"
 
 export default class RstDetail extends Component {
    constructor(props) {
@@ -61,6 +64,14 @@ export default class RstDetail extends Component {
    closeConfirmation = (res) => {
       this.setState({showConfirmation: false});
    }
+
+   handleUpVoteClick = (reviewId) => {
+      // TODO: Integrate upvotes
+   }
+
+   handleDownVoteClick = (reviewId) => {
+      // TODO: Integrate downvotes
+   }
  
    render() {
       let matchId = this.props.match.params.id;
@@ -84,7 +95,11 @@ export default class RstDetail extends Component {
                content={rev.content}
                title={rev.title}
                rating={rev.rating}
-               name={rev.firstName + " " + rev.lastName} />);
+               upVotes={rev.upVotes || 0}
+               auVote={rev.auVote || 0}
+               name={rev.firstName + " " + rev.lastName}
+               handleUpVote={() => this.handleUpVoteClick(rev.id)}
+               handleDownVote={() => this.handleDownVoteClick(rev.id)} />);
          });
       }
 
@@ -122,7 +137,33 @@ const RevItem = function (props) {
       <ListGroupItem>
          <section className="container">
             <Row>
-               <Col sm={2}>
+               <Col sm={1} style={{paddingRight: "0px"}}>
+                  <Row>
+                        <FontAwesomeIcon 
+                           onClick={props.handleUpVote}
+                           style={{padding: "0px", marginBottom: "-25px"}} 
+                           icon={upVote} 
+                           color={props.auVote === 1 ? "green" : ""}
+                           size="5x"/>
+                  </Row>
+                  <Row>
+                     <h4 style={
+                           {padding: "0px", margin: "0px", marginTop: "-5px", 
+                           marginBottom: "-5px", paddingLeft: "16.5px"}}>
+                        {props.upVotes}
+                     </h4>
+                  </Row>
+                  <Row>
+                     <FontAwesomeIcon 
+                     onClick={props.handleDownVote}
+                     class="DownVoteButton"
+                     className="DownVoteButton"
+                     style={{padding: "0px", marginTop: "-25px", marginBottom: "-10px"}} 
+                     icon={downVote} 
+                     size="5x"/>
+                  </Row>
+               </Col>
+               <Col sm={2} style={{paddingLeft: "0px"}}>
                   <Row>
                      <Rating 
                         emptySymbol={<FontAwesomeIcon icon={farStar} size="lg"/>}
@@ -133,7 +174,7 @@ const RevItem = function (props) {
                      <p>{props.name}<br></br><a href={"mailto:" + props.email}>{props.email}</a></p>
                   </Row>
                </Col>
-               <Col sm={10}>
+               <Col sm={9} style={{paddingLeft: "0px"}}>
                   <Row>
                      <h3 style={{padding: "0px", margin: "0px"}}>
                         {props.title}
