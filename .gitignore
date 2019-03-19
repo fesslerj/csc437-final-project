@@ -87,3 +87,4 @@ typings/
 
 # connection file - must be kept on local machines AND out of the repo!
 Routes/connection.json
+package-lock.json
