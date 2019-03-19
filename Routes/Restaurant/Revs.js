@@ -9,7 +9,8 @@ router.baseURL = '/Revs';
 router.get('/:revId', function(req, res) {
    var vld = req.validator;
    var cnn = req.cnn;
-   var query = 'select r.rstId, r.whenMade, p.email, r.title, r.content,'
+   var query = 'select r.rstId, p.firstName, p.lastName, r.whenMade, p.email,'
+   + ' r.title, r.content,'
    + ' r.rating, r.ownerResponseWhenMade, r.ownerResponseContent from Review r'
    + ' join Person p on r.prsId = p.id'
    + ' where r.id = ?';
@@ -51,6 +52,8 @@ router.get('/:revId', function(req, res) {
       var revObj = {
          rstId: revResult.rstId,
          whenMade: revResult.rstId ? revResult.rstId.getTime() : 0,
+         firstName: revResult.firstName,
+         lastName: revResult.lastName,
          email: revResult.email,
          title: revResult.title,
          content: revResult.content,
