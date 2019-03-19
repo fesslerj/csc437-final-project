@@ -73,9 +73,6 @@ router.get('/:revId', function(req, res) {
       if (vld.check(revs.length, Tags.notFound, null, cb)) {
          revResult = revs[0];
          cnn.chkQry(votsFromRevQry, [req.params.revId], cb);
-         /*res.json(revs.map(arev => Object.assign({}, arev,
-          {whenMade: arev.whenMade ? arev.whenMade.getTime() : 0}))[0]);
-         cb();*/
       }
    },
    function(vots, fields, cb) {
