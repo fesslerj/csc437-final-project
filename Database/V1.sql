@@ -22,7 +22,7 @@ create table Restaurant (
    url varchar(80) not null,
    category varchar(80) not null,
    lastReview datetime,
-   constraint FKReview_ownerId foreign key (ownerId) references Person(id)
+   constraint FKReview_ownerId foreign key (ownerId) references Person(id) 
     on delete cascade,
    unique key UK_title(title)
 );
@@ -32,6 +32,7 @@ create table Review (
    rstId int not null,
    prsId int not null,
    whenMade datetime not null,
+   title varchar (240) not null,
    content varchar(5000) not null,
    rating int,
    ownerResponseWhenMade datetime,
@@ -53,7 +54,7 @@ create table Vote (
    constraint FKVote_revId foreign key (revId) references Review(id)
     on delete cascade,
    constraint FKVote_prsId foreign key (prsId) references Person(id)
-    on delete cascade,
+    on delete cascade
 );
 
 insert into Person (firstName, lastName, email, password, whenRegistered, role)
