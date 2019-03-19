@@ -46,11 +46,14 @@ create table Vote (
    id int auto_increment primary key,
    rstId int not null,
    revId int not null,
+   prsId int not null,
    voteValue tinyint not null,
    constraint FKVote_rstId foreign key (rstId) references Restaurant(id)
     on delete cascade,
    constraint FKVote_revId foreign key (revId) references Review(id)
-    on delete cascade
+    on delete cascade,
+   constraint FKVote_prsId foreign key (prsId) references Person(id)
+    on delete cascade,
 );
 
 insert into Person (firstName, lastName, email, password, whenRegistered, role)
