@@ -41,10 +41,10 @@ var voteReducer = function(acc, cur) {
 router.get('/:revId', function(req, res) {
    var vld = req.validator;
    var cnn = req.cnn;
-   var query = 'select m.rstId, m.whenMade, p.email, m.content, m.rating,'
-   + ' m.ownerResponseWhenMade, m.ownerResponseContent from Review m'
-   + ' join Person p on m.prsId = p.id'
-   + ' where m.id = ?';
+   var query = 'select r.rstId, r.whenMade, p.email, r.title, r.content,'
+   + ' r.rating, r.ownerResponseWhenMade, r.ownerResponseContent from Review r'
+   + ' join Person p on r.prsId = p.id'
+   + ' where r.id = ?';
 
    // http://sqlfiddle.com/#!9/a78bff/48
    var votsFromRevQry = 'SELECT outerv.id, outerv.rstId, outerv.prsId, outerv.voteValue, pcol.count, pcol.sum '
