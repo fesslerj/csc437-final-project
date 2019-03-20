@@ -41,8 +41,7 @@ export default class RstCategories extends Component {
 
       return (
          <section className="container">
-            <h1>Radical Restaurants</h1>
-            <h2>Restaurant Categories</h2>
+            <h1>Radical Restaurant Categories</h1>
             <ListGroup>
                {catgEls}
             </ListGroup>
