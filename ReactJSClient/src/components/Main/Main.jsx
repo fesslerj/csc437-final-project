@@ -103,7 +103,7 @@ class Main extends Component {
                   {...this.props}/>
                <OpenRoute path='/allCatgs' component={RstCategories}
                   {...this.props}/>
-               <OpenRoute path='/catg/:catg' component={RstOverview}
+               <OpenRoute path='/Catg/:catg' component={RstOverview}
                   byCatg={true} {...this.props}/>
                <ProtectedRoute path='/myRsts' component={RstOverview}
                   userOnly="true" {...this.props}/>

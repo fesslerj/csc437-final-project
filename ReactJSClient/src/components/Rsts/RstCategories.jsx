@@ -55,7 +55,7 @@ export default class RstCategories extends Component {
 const CatgItem = function (props) {
    return (
       <ListGroupItem>
-         <Link to={`/catg/${props.category}`}>{props.category}</Link>
+         <Link to={`/Catg/${props.category}`}>{props.category}</Link>
       </ListGroupItem>
    )
 }
