@@ -61,7 +61,10 @@ export default class RevRspModal extends Component {
                         onChange={this.handleBodyChange}
                      />
                      <FormControl.Feedback />
-                     {!this.getValidationState() ? "": <HelpBlock style={{marginTop: "15px"}}>Response body is required.</HelpBlock>}
+                     {!this.getValidationState() ? "": 
+                      <HelpBlock style={{marginTop: "15px"}}>
+                        Response body is required.
+                      </HelpBlock>}
                   </FormGroup>
                </form>
             </Modal.Body>
