@@ -37,8 +37,11 @@ class Main extends Component {
                   <Navbar.Collapse>
                   
                      <Nav>
-                        <a className="navbar-left" style={{marginRight: "10px"}} href="/allRsts">
-                           <img alt="Logo" style={{marginTop: "7px", maxHeight: "30px"}} src="/r3logo.png"></img>
+                        <a className="navbar-left" 
+                         style={{marginRight: "10px"}} href="/allRsts">
+                           <img alt="Logo" 
+                            style={{marginTop: "7px", maxHeight: "30px"}} 
+                            src="/r3logo.png"></img>
                         </a>
                         {this.signedIn() ?
                            [
