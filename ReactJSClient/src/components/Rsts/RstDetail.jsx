@@ -102,16 +102,28 @@ export default class RstDetail extends Component {
       this.setState({showConfirmation: false});
    }
 
-   handleUpVoteClick = (rstId, reviewId) => {
+   handleUpVoteClick = (rstId, reviewId, curVot) => {
       // TODO: Integrate upvotes
-      if ('id' in this.props.Prss)
-         this.props.modVot(rstId, reviewId, 1, () => this.props.updateRev(reviewId));
+      if ('id' in this.props.Prss) {
+         if (curVot === 1) {
+            this.props.delVot(rstId, reviewId, () => this.props.updateRev(reviewId));
+         }
+         else {
+            this.props.modVot(rstId, reviewId, 1, () => this.props.updateRev(reviewId));
+         }
+      }
    }
 
-   handleDownVoteClick = (rstId, reviewId) => {
+   handleDownVoteClick = (rstId, reviewId, curVot) => {
       // TODO: Integrate downvotes
-      if ('id' in this.props.Prss)
-         this.props.modVot(rstId, reviewId, -1, () => this.props.updateRev(reviewId));
+      if ('id' in this.props.Prss) {
+         if (curVot === -1) {
+            this.props.delVot(rstId, reviewId, () => this.props.updateRev(reviewId));
+         }
+         else {
+            this.props.modVot(rstId, reviewId, -1, () => this.props.updateRev(reviewId));
+         }
+      }
    }
 
    handleAddResponseClick  = (rstId, reviewId) => {
@@ -146,8 +158,8 @@ export default class RstDetail extends Component {
                upVotes={(rev.numUpvotes || 0) + myVot}
                auVote={myVot}
                name={rev.firstName + " " + rev.lastName}
-               handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id)}
-               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)}
+               handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id, myVot)}
+               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id, myVot)}
                currentOwner={this.props.Prss.id && myRst.ownerId === this.props.Prss.id}
                ownerResponse={rev.ownerResponse}
                rstTitle={myRst.title}

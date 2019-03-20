@@ -330,6 +330,17 @@ export function postVot(rstId, revId, vote) {
    return post(`Vots/${rstId}/${revId}`, {voteValue: vote}, true);
 }
 
+/**
+ * Removes the user's vote on a review
+ * @param {(number|string)} rstId restaurant ID
+ * @param {(number|string)} revId review id
+ * @returns {Promise} 
+ */
+export function delVot(rstId, revId) {
+   return del(`Vots/${rstId}/${revId}`, true);
+}
+
+
 
 const errMap = {
     en: {
