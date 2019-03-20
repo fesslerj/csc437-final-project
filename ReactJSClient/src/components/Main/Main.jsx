@@ -38,7 +38,7 @@ class Main extends Component {
                   
                      <Nav>
                         <a className="navbar-left" style={{marginRight: "10px"}} href="/allRsts">
-                           <img style={{marginTop: "7px", maxHeight: "30px"}} src="/r3logo.png"></img>
+                           <img alt="Logo" style={{marginTop: "7px", maxHeight: "30px"}} src="/r3logo.png"></img>
                         </a>
                         {this.signedIn() ?
                            [
