@@ -297,6 +297,17 @@ export function getVot(rstId, revId) {
     .then(({jsonBody}) => jsonBody.voteValue);
 }
 
+/**
+ * Changes the user's vote on a review
+ * @param {(number|string)} rstId restaurant ID
+ * @param {(number|string)} revId review id
+ * @param {(number|string)} vote vote - MUST BE -1 OR 1
+ * @returns {Promise} 
+ */
+export function postVot(rstId, revId, vote) {
+   return post(`Vots/${rstId}/${revId}`, {voteValue: vote}, true);
+}
+
 
 const errMap = {
     en: {
