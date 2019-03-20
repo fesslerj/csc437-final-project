@@ -9,6 +9,7 @@ function Errs(state = [], action) {
    case 'UPDATE_RST_ERR':
    case 'DEL_RST_ERR':
    case 'UPDATE_REVS_ERR':
+   case 'UPDATE_REV_ERR':
    case 'ADD_REV_ERR':
    case 'UPDATE_VOT_ERR':
    case 'COMPONENT_ERR':

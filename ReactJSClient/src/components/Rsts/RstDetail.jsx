@@ -36,7 +36,10 @@ export default class RstDetail extends Component {
             a_myRst = this.props.Rsts.find(cur => cur.id === a_matchId);
 
             if (a_myRst && this.props.Revs.hasOwnProperty(a_myRst.id)) {
-               this.props.Revs[a_myRst.id].forEach(rev => this.props.updateVot(a_myRst.id, rev.id));
+               this.props.Revs[a_myRst.id].forEach(rev => {
+                  if ('id' in this.props.Prss)
+                     this.props.updateVot(a_myRst.id, rev.id)
+               });
             }
          });
       }
@@ -79,12 +82,14 @@ export default class RstDetail extends Component {
 
    handleUpVoteClick = (rstId, reviewId) => {
       // TODO: Integrate upvotes
-      this.props.modVot(rstId, reviewId, 1);
+      if ('id' in this.props.Prss)
+         this.props.modVot(rstId, reviewId, 1, () => this.props.updateRev(reviewId));
    }
 
    handleDownVoteClick = (rstId, reviewId) => {
       // TODO: Integrate downvotes
-      this.props.modVot(rstId, reviewId, -1);
+      if ('id' in this.props.Prss)
+         this.props.modVot(rstId, reviewId, -1, () => this.props.updateRev(reviewId));
    }
  
    render() {

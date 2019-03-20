@@ -11,6 +11,20 @@ export default function Revs(state = {}, action) {
          return Object.assign({},
           state,
           myRst);
+      case 'UPDATE_REV': // Replace ONLY ONE rev for a rst
+         let myRev = state[action.rstId].map((rev, revIdx) => {
+            return rev.id !== action.revId ? rev : action.rev;
+         });
+         
+         if (myRev.findIndex((rev,revIdx) => rev.id === action.revId) === -1)
+            myRev = myRev.concat([action.rev]);
+         
+         let curRst = {};
+         curRst[action.rstId] = myRev;
+
+         return Object.assign({},
+            state,
+            curRst);
       case 'ADD_REV':
          let theRst = state[action.rstId] || [];
          theRst = theRst.concat([action.rev]);
