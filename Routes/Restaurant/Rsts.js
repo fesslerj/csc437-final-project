@@ -61,22 +61,20 @@ router.post('/', function(req, res) {
       vld.checkLoggedIn(cb)
        && vld.hasFields(body, ["title", "url", "category"], cb)
        && vld.check(typeof(body.title) === 'string'
+       && body.title.length
        && body.title.length <= rstTitleMaxLength,
        Tags.badValue, ["title"], cb)
        && vld.check(typeof(body.url) === 'string'
        && body.url.length <= rstURLMaxLength,
        Tags.badValue, ["url"], cb)
        && vld.check(typeof(body.category) === 'string'
+       && body.category.length
        && body.category.length <= rstCategoryMaxLength,
        Tags.badValue, ["category"], cb)
-<<<<<<< Updated upstream
-       && !body.description || (vld.check(typeof(body.description) === 'string'
-=======
        && (!body.description || (vld.check(typeof(body.description) ===
        'string'
->>>>>>> Stashed changes
        && body.description.length <= rstDescriptionMaxLength,
-       Tags.badValue, ["description"], cb))
+       Tags.badValue, ["description"], cb)))
        && cnn.chkQry('select * from Restaurant where title = ?', 
        body.title, cb);
    },
@@ -132,6 +130,7 @@ router.put('/:rstId', function(req, res) {
       vld.checkLoggedIn(cb)
        && vld.hasFields(body, ["title"], cb)
        && vld.check(typeof(body.title) === 'string'
+       && body.title
        && body.title.length <= rstTitleMaxLength,
        Tags.badValue, ["title"], cb)
        && cnn.chkQry('select * from Restaurant where id = ?', [rstId], cb);

@@ -10,7 +10,8 @@ export default class RstModal extends Component {
          rstTitle: (this.props.rst && this.props.rst.title) || "",
          rstURL: (this.props.rst && this.props.rst.url) || "",
          rstDescription: (this.props.rst && this.props.rst.description) || "",
-         rstCategory: (this.props.rst && this.props.rst.category) || this.props.catg || "Bakery",
+         rstCategory: (this.props.rst && this.props.rst.category)
+          || this.props.catg || "Bakery",
       }
    }
 
@@ -52,7 +53,8 @@ export default class RstModal extends Component {
          this.setState({
             rstTitle: (nextProps.rst && nextProps.rst.title) || "",
             rstURL: (nextProps.rst && nextProps.rst.url) || "",
-            rstCategory: (nextProps.rst && nextProps.rst.category) || nextProps.catg || "Bakery",
+            rstCategory: (nextProps.rst && nextProps.rst.category) 
+             || nextProps.catg || "Bakery",
             rstDescription: (nextProps.rst && nextProps.rst.description) || ""
          });
       }
@@ -79,16 +81,21 @@ export default class RstModal extends Component {
                         placeholder="Pat's Phenomenal Pastries"
                         onChange={this.handleTitleChange}
                      />
-                     <ControlLabel style={{marginTop: "15px"}}>Restaurant URL*</ControlLabel>
+                     <ControlLabel style={{marginTop: "15px"}}>
+                        Restaurant URL*
+                     </ControlLabel>
                      <FormControl
                         type="text"
                         value={this.state.rstURL}
                         placeholder="https://patspastries.com"
                         onChange={this.handleURLChange}
                      />
-                     <ControlLabel style={{marginTop: "15px"}}>Restaurant Category*</ControlLabel>
+                     <ControlLabel style={{marginTop: "15px"}}>
+                        Restaurant Category*
+                     </ControlLabel>
                      <FormControl componentClass="select" 
-                        onChange={this.handleCategoryChange} defaultValue={this.state.rstCategory}>
+                        onChange={this.handleCategoryChange} 
+                        defaultValue={this.state.rstCategory}>
                         <option>Bakery</option>
                         <option>Barbeque</option>
                         <option>Chinese</option>
@@ -104,7 +111,9 @@ export default class RstModal extends Component {
                         <option>Sandwiches</option>
                         <option>Pizza</option>
                      </FormControl>
-                     <ControlLabel style={{marginTop: "15px"}}>Restaurant Description</ControlLabel>
+                     <ControlLabel style={{marginTop: "15px"}}>
+                        Restaurant Description
+                     </ControlLabel>
                      <FormControl
                         componentClass="textarea"
                         value={this.state.rstDescription}
@@ -112,7 +121,9 @@ export default class RstModal extends Component {
                         onChange={this.handleDescriptionChange}
                      />
                      <FormControl.Feedback />
-                     {!this.getValidationState() ? "" : <HelpBlock>Title and URL can not be empty.</HelpBlock>}
+                     {!this.getValidationState() ? "" : 
+                        <HelpBlock>Title and URL can not be empty.</HelpBlock>
+                     }
                   </FormGroup>
                </form>
             </Modal.Body>

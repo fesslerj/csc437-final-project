@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Register, SignIn, RstOverview, RstDetail,
    ErrorDialog, RstCategories } from '../index'
 import { Route, Redirect, Switch } from 'react-router-dom';
@@ -37,9 +38,12 @@ class Main extends Component {
                   <Navbar.Collapse>
                   
                      <Nav>
-                        <a className="navbar-left" style={{marginRight: "10px"}} href="/allRsts">
-                           <img style={{marginTop: "7px", maxHeight: "30px"}} src="/r3logo.png"></img>
-                        </a>
+                        <Link className="navbar-left" 
+                         style={{marginRight: "10px"}} to="/allRsts">
+                           <img alt="Logo" 
+                            style={{marginTop: "7px", maxHeight: "30px"}} 
+                            src="/r3logo.png"></img>
+                        </Link>
                         {this.signedIn() ?
                            [
                               <LinkContainer key={"all"} to="/allRsts">

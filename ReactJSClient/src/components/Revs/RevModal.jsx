@@ -29,7 +29,8 @@ export default class RevModal extends Component {
    }
 
    getValidationState = () => {
-      if (this.state.revTitle && this.state.revRating && this.state.revContent) {
+      if (this.state.revTitle && this.state.revRating && 
+       this.state.revContent) {
          return null
       }
       return "warning";
@@ -80,7 +81,9 @@ export default class RevModal extends Component {
                         placeholder="Example: I loved it!!"
                         onChange={this.handleTitleChange}
                      />
-                     <ControlLabel style={{marginTop: "15px"}}>Review Body*</ControlLabel>
+                     <ControlLabel style={{marginTop: "15px"}}>
+                        Review Body*
+                     </ControlLabel>
                      <FormControl
                         style={{height: "20em"}}
                         componentClass="textarea"
@@ -90,14 +93,20 @@ export default class RevModal extends Component {
                      />
                      <div style={{marginTop: "15px"}}>
                         <Rating 
-                           emptySymbol={<FontAwesomeIcon icon={farStar} size="2x"/>}
-                           fullSymbol={<FontAwesomeIcon icon={fasStar} size="2x" color="gold" />}
+                           emptySymbol={
+                            <FontAwesomeIcon icon={farStar} size="2x"/>}
+                           fullSymbol={
+                            <FontAwesomeIcon icon={fasStar} 
+                            size="2x" color="gold" />}
                            initialRating={this.state.revRating}
                            onChange={this.handleStarChange}
                         />
                      </div>
                      <FormControl.Feedback />
-                     {!this.getValidationState() ? "": <HelpBlock style={{marginTop: "15px"}}>All fields, including star-rating, are required.</HelpBlock>}
+                     {!this.getValidationState() ? "": 
+                      <HelpBlock style={{marginTop: "15px"}}>
+                        All fields, including star-rating, are required.
+                     </HelpBlock>}
                   </FormGroup>
                </form>
             </Modal.Body>
