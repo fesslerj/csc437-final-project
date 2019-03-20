@@ -81,6 +81,7 @@ app.use('/Prss', require('./Routes/Account/Prss.js'));
 app.use('/Ssns', require('./Routes/Account/Ssns.js'));
 app.use('/Rsts', require('./Routes/Restaurant/Rsts.js'));
 app.use('/Revs', require('./Routes/Restaurant/Revs.js'));
+app.use('/Vots', require('./Routes/Restaurant/Vots.js'));
 
 // Special debugging route for /DB DELETE.  Clears all table contents,
 //resets all auto_increment keys to start at 1, and reinserts one admin user.
@@ -89,14 +90,14 @@ app.delete('/DB', function(req, res) {
    
    if (admin) {  
       // Callbacks to clear tables
-      var cbs = ["Restaurant", "Review", "Person"].map(function(tblName) {
+      var cbs = ["Restaurant", "Review", "Person", "Vote"].map(function(tblName) {
          return function(cb) {
             req.cnn.query("delete from " + tblName, cb);
          };
       });
       
       // Callbacks to reset increment bases
-      cbs = cbs.concat(["Restaurant", "Review", "Person"].map(
+      cbs = cbs.concat(["Restaurant", "Review", "Person", "Vote"].map(
          function(tblName) {
             return function(cb) {
                req.cnn.query("alter table " + tblName + " auto_increment = 1",

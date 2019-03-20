@@ -2,6 +2,7 @@ var Express = require('express');
 var Tags = require('../Validator.js').Tags;
 var router = Express.Router({caseSensitive: true});
 var async = require('async');
+var Voting = require('./VoteWeighing.js');
 
 // HTTP error code constants
 var httpOk = 200;
@@ -169,10 +170,36 @@ router.get('/:rstId/Revs', function(req, res) {
    var vld = req.validator;
    var rstId = req.params.rstId;
    var cnn = req.cnn;
-   var myQueryA = 'select r.id, p.firstName, p.lastName, r.whenMade, p.email, r.content, r.title, r.rating from'
-    + ' Restaurant c join Review r on r.rstId = c.id join Person p on '
-    + 'r.prsId = p.id where c.id = ?';
-   var myQueryB = ' order by r.whenMade asc, r.id asc';
+   /*var myQueryA = 'select r.id, p.firstName, p.lastName, r.whenMade, p.email,'
+    + ' r.content, r.title, r.rating, r.ownerResponseWhenMade,'
+    + ' r.ownerResponseContent from'
+    + ' Review r join Person p on'
+    + ' r.prsId = p.id where r.rstId = ?';
+   var myQueryB = ' order by r.whenMade asc, r.id asc';*/
+
+   var myQueryA = 'SELECT hyrev.id, hyrev.firstName, hyrev.lastName, hyrev.whenMade, hyrev.email,'
+   + ' hyrev.content, hyrev.title, hyrev.rating, hyrev.ownerResponseWhenMade,'
+   + ' hyrev.ownerResponseContent, supcol.prsId AS supcolPrsId, supcol.voteValue, supcol.count, supcol.sum'
+   + ' FROM (SELECT rrr.id, ppp.firstName, ppp.lastName, rrr.whenMade, ppp.email,'
+   + ' rrr.content, rrr.title, rrr.rating, rrr.ownerResponseWhenMade,'
+   + ' rrr.ownerResponseContent FROM Review rrr join Person ppp on'
+   + ' rrr.prsId = ppp.id where rrr.rstId = ?';
+
+   var myQueryB = ' ORDER BY rrr.whenMade ASC, rrr.id ASC) hyrev'
+   + ' LEFT JOIN (SELECT outerv.id, outerv.rstId, outerv.revId, outerv.prsId, outerv.voteValue, pcol.count, pcol.sum'
+   + ' FROM Vote outerv'
+   + ' JOIN (SELECT p.id, SUM(rcol.count) as count, SUM(rcol.sum) as sum'
+   + ' FROM Person p'
+   + ' LEFT JOIN (SELECT r.id, r.prsId, updown.count, updown.sum'
+   + ' FROM Review r'
+   + ' JOIN (SELECT v.revId, COUNT(v.id) AS count, SUM(v.voteValue) AS sum'
+   + ' FROM Vote v'
+   + ' GROUP BY v.revId) updown ON updown.revId = r.id) rcol ON rcol.prsId = p.id'
+   + ' GROUP BY p.id) pcol ON pcol.id = outerv.prsId'
+   + ' ORDER BY outerv.id, outerv.rstId, outerv.prsId) supcol ON supcol.revId = hyrev.id'
+   + ' ORDER BY hyrev.whenMade ASC, hyrev.id ASC';
+
+   var revResult = null;
 
    // Some console logging for debgging purposes
    console.log("[[[[]]]]    [[[[]]]]   Handling RSTS/REV GET with RST id="
@@ -228,9 +255,79 @@ router.get('/:rstId/Revs', function(req, res) {
    function(revs, fields, cb) { // Return retrieved reviews
       console.log(' [][] RSTS/REV GET - callback 3! revs returning: '
        + revs.length.toString());
-      res.json(revs.map(arev => Object.assign({}, arev,
+
+      var newRevs = [];
+      var newRevExists = function(chkId, chkIndex) {
+         return function(rv, idx) {
+            return rv.id === chkId && chkIndex !== idx;
+         }
+      };
+      var erred = false;
+      for (var j=0; j < revs.length; j++) {
+         if (!newRevs.some(newRevExists(revs[j].id, j))) {
+            newRevs.push(Object.assign({}, revs[j], {
+               votes: [{
+                  voteValue: revs[j].voteValue,
+                  count: revs[j].count,
+                  sum: revs[j].sum
+               }]
+            }));
+         } else {
+            /*var k = 0;
+            var foundIdx = -1;
+            var predicate = newRevExists(revs[j].id, j);
+            while (k < newRevs.len) {
+               if (predicate.call(undefined, newRevs[k], k, newRevs)) {
+                  foundIdx = k;
+                  break;
+               }
+               k++;
+            }*/
+            var foundIdx = newRevs.findIndex(newRevExists(revs[j].id, j));
+            if (foundIdx >= 0) {
+               newRevs[foundIdx].votes.push({
+                  voteValue: revs[j].voteValue,
+                  count: revs[j].count,
+                  sum: revs[j].sum
+               });
+            } else {
+               erred = true;
+            }
+         }
+      }
+
+      if (!erred) {
+         newRevs = newRevs.map(nr => {
+            var weightedVotes = nr.votes.reduce(Voting.WeightedVoteReducer, 1.0);
+            var revObj = {
+               id: nr.id,
+               whenMade: nr.whenMade ? nr.whenMade.getTime() : 0,
+               firstName: nr.firstName,
+               lastName: nr.lastName,
+               email: nr.email,
+               title: nr.title,
+               content: nr.content,
+               rating: nr.rating,
+               numUpvotes: Math.floor(weightedVotes),
+               ownerResponse: (nr.ownerResponseWhenMade
+                && nr.ownerResponseContent)
+                ? {
+                whenMade: nr.ownerResponseWhenMade,
+                content: nr.ownerResponseContent
+                }
+                : null
+            };
+            return revObj;
+         });
+         res.json(newRevs);
+         cb();
+      } else {
+         vld.check(false, Tags.queryFailed, null, cb);
+      }
+
+      /*res.json(revs.map(arev => Object.assign({}, arev,
        {whenMade: arev.whenMade ? arev.whenMade.getTime() : 0})));
-      cb();
+      cb();*/
    }],
    function(err){
       cnn.release();

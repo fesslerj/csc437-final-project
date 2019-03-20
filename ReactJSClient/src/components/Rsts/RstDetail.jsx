@@ -7,7 +7,6 @@ import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
 import { faSortUp as upVote } from '@fortawesome/free-solid-svg-icons' 
 import { faSortDown as downVote } from '@fortawesome/free-solid-svg-icons' 
-import "./RstDetail.css"
 
 export default class RstDetail extends Component {
    constructor(props) {
@@ -26,7 +25,19 @@ export default class RstDetail extends Component {
           new Error('Error in component RstDetail: Invalid Rst ID'));
       }
       else {
-         this.props.updateRevs(matchId);
+         this.props.updateRevs(matchId, undefined, undefined, () => {
+            let a_matchId = this.props.match.params.id;
+            let a_myRst = null;
+
+            if (typeof(a_matchId) === 'string' && /^\d+$/.test(a_matchId))
+            a_matchId = parseInt(a_matchId, 10);
+
+            a_myRst = this.props.Rsts.find(cur => cur.id === a_matchId);
+
+            if (a_myRst && this.props.Revs.hasOwnProperty(a_myRst.id)) {
+               this.props.Revs[a_myRst.id].forEach(rev => this.props.updateVot(a_myRst.id, rev.id));
+            }
+         });
       }
 
       this.state = {
@@ -65,12 +76,16 @@ export default class RstDetail extends Component {
       this.setState({showConfirmation: false});
    }
 
-   handleUpVoteClick = (reviewId) => {
+   handleUpVoteClick = (rstId, reviewId) => {
       // TODO: Integrate upvotes
+      if(this.props.Prss.id)
+         this.props.modVot(rstId, reviewId, 1);
    }
 
-   handleDownVoteClick = (reviewId) => {
+   handleDownVoteClick = (rstId, reviewId) => {
       // TODO: Integrate downvotes
+      if(this.props.Prss.id)
+         this.props.modVot(rstId, reviewId, -1);
    }
  
    render() {
@@ -87,6 +102,7 @@ export default class RstDetail extends Component {
  
       if (myRst && this.props.Revs.hasOwnProperty(myRst.id)) {
          this.props.Revs[myRst.id].forEach(rev => {
+            let myVot = this.props.Vots[rev.id] || 0;
             revItems.push(<RevItem
                key={rev.id}
                id={rev.id}
@@ -95,11 +111,11 @@ export default class RstDetail extends Component {
                content={rev.content}
                title={rev.title}
                rating={rev.rating}
-               upVotes={rev.upVotes || 0}
-               auVote={rev.auVote || 0}
+               upVotes={rev.numUpvotes || 0}
+               auVote={myVot}
                name={rev.firstName + " " + rev.lastName}
-               handleUpVote={() => this.handleUpVoteClick(rev.id)}
-               handleDownVote={() => this.handleDownVoteClick(rev.id)} />);
+               handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id)}
+               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)} />);
          });
       }
 
@@ -139,12 +155,12 @@ const RevItem = function (props) {
             <Row>
                <Col sm={1} style={{paddingRight: "0px"}}>
                   <Row>
-                        <FontAwesomeIcon 
-                           onClick={props.handleUpVote}
-                           style={{padding: "0px", marginBottom: "-25px"}} 
-                           icon={upVote} 
-                           color={props.auVote === 1 ? "green" : ""}
-                           size="5x"/>
+                     <FontAwesomeIcon 
+                        onClick={props.handleUpVote}
+                        style={{padding: "0px", marginBottom: "-25px"}} 
+                        icon={upVote} 
+                        color={props.auVote === 1 ? "green" : ""}
+                        size="5x"/>
                   </Row>
                   <Row>
                      <h4 style={
@@ -155,12 +171,13 @@ const RevItem = function (props) {
                   </Row>
                   <Row>
                      <FontAwesomeIcon 
-                     onClick={props.handleDownVote}
-                     class="DownVoteButton"
-                     className="DownVoteButton"
-                     style={{padding: "0px", marginTop: "-25px", marginBottom: "-10px"}} 
-                     icon={downVote} 
-                     size="5x"/>
+                        onClick={props.handleDownVote}
+                        class="DownVoteButton"
+                        className="DownVoteButton"
+                        style={{padding: "0px", marginTop: "-25px", marginBottom: "-10px"}} 
+                        icon={downVote} 
+                        color={props.auVote === -1 ? "red" : ""}
+                        size="5x"/>
                   </Row>
                </Col>
                <Col sm={2} style={{paddingLeft: "0px"}}>
