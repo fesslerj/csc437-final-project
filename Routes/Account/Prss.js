@@ -69,9 +69,6 @@ router.post('/', function(req, res) {
    if (admin && !body.password)
       body.password = "*";                       // Blocking password
    body.whenRegistered = new Date();
-   
-   console.log("PRSS POST::termsAccepted is "
-    + (body.termsAccepted || admin).toString());
 
    async.waterfall([
    function(cb) { // Check properties and search for Email duplicates
