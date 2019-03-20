@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Register, SignIn, RstOverview, RstDetail,
-   ErrorDialog } from '../index'
+   ErrorDialog, RstCategories } from '../index'
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -37,6 +37,9 @@ class Main extends Component {
                      <Nav>
                         {this.signedIn() ?
                            [
+                              <LinkContainer key={"catg"} to="/allCatgs">
+                                 <NavItem>Categories</NavItem>
+                              </LinkContainer>,
                               <LinkContainer key={"all"} to="/allRsts">
                                  <NavItem>All Restaurants</NavItem>
                               </LinkContainer>,
@@ -46,6 +49,9 @@ class Main extends Component {
                            ]
                            :
                            [
+                              <LinkContainer key={"catg"} to="/allCatgs">
+                                 <NavItem>Categories</NavItem>
+                              </LinkContainer>,
                               <LinkContainer key={"all"} to="/allRsts">
                                  <NavItem>All Restaurants</NavItem>
                               </LinkContainer>
@@ -95,6 +101,10 @@ class Main extends Component {
                   render={() => <Register {...this.props} />} />
                <OpenRoute path='/allRsts' component={RstOverview}
                   {...this.props}/>
+               <OpenRoute path='/allCatgs' component={RstCategories}
+                  {...this.props}/>
+               <OpenRoute path='/catg/:catg' component={RstOverview}
+                  byCatg={true} {...this.props}/>
                <ProtectedRoute path='/myRsts' component={RstOverview}
                   userOnly="true" {...this.props}/>
                <OpenRoute path='/RstDetail/:id' component={RstDetail}
