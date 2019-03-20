@@ -133,6 +133,25 @@ export function updateRevs(rstId, dateTime = undefined,
 }
 
 /**
+ * Get one review
+ * @param {(number|string)} revId the review id
+ * @param {?function} [cb] OPTIONAL callback
+ */
+export function updateRev(revId, cb = undefined) {
+     return (dispatch, prevState) => {
+        api.getRev(revId)
+        .then((rev) => console.log('DISPATCHANG ', Object.assign({}, rev, { id: revId })) || dispatch({
+           type: 'UPDATE_REV',
+           rstId: rev.rstId, 
+           revId,
+           rev: Object.assign({}, rev, { id: revId })
+         }))
+        .then(() => {if (cb) cb();})
+        .catch(error => dispatch(prepareError('UPDATE_REV_ERR', error)));
+     };
+  }
+
+/**
  * Post a new review to a rst
  * @param {(number|string)} rstId the rst ID
  * @param {{content: string}} newRev the review data (content)
