@@ -172,7 +172,7 @@ export function addRev(rstId, newRev) {
 export function addRevRsp(revId, rstId, revRsp) {
    return (dispatch, prevState) => {
       api.postRevRsp(revId, revRsp)
-      .then((rev) => dispatch({type: 'UPDATE_REV', rstId, rev}))
+      .then((rev) => dispatch({type: 'UPDATE_REV', rstId, revId, rev}))
       .catch(error => dispatch(prepareError('ADD_REV_RSP_ERR', error)));
    };
 }

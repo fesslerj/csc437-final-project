@@ -30,7 +30,7 @@ export default class RevRspModal extends Component {
    }
 
    componentWillReceiveProps = (nextProps) => {
-      if (nextProps.showRspModal) {
+      if (nextProps.showModal) {
          this.setState({
             revRspContent: (nextProps.revRsp && nextProps.revRsp.content) || "",
          })

@@ -150,6 +150,7 @@ export default class RstDetail extends Component {
                handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)}
                currentOwner={this.props.Prss.id && myRst.ownerId === this.props.Prss.id}
                ownerResponse={rev.ownerResponse}
+               rstTitle={myRst.title}
                addResponse={() => this.handleAddResponseClick(myRst.id, rev.id) } />);
             });
       }
@@ -244,12 +245,24 @@ const RevItem = function (props) {
                         {props.content}
                      </p>
                   </Row>
+                  <Row className={props.ownerResponse ? "" : "hidden"} style={{marginTop: "10px"}}>
+                     <Col sm={8}>
+                        <div style={{padding: "3px", border: "2px solid lightgray", borderRadius: "3px"}}>
+                           <i>{props.rstTitle} responded on {new Intl.DateTimeFormat('us',
+                        {
+                           year: "numeric", month: "short", day: "numeric"
+                        })
+                        .format(new Date(props.ownerResponse && props.ownerResponse.whenMade))}:</i>
+                           <p>"{props.ownerResponse && props.ownerResponse.content}"</p>
+                        </div>
+                     </Col>
+                  </Row>
                   <Row bsStyle="pull-right" style={{paddingRight:"60px"}} className="pull-right">
-                  <Button 
-                   bsStyle={props.currentOwner ? "primary" : "primary hidden"}
-                   onClick={props.addResponse}>
-                     Add Response
-                  </Button>
+                     <Button 
+                     bsStyle={props.currentOwner && !props.ownerResponse ? "primary" : "primary hidden"}
+                     onClick={props.addResponse}>
+                        Add Response
+                     </Button>
                   </Row>
                </Col>
             </Row>
