@@ -77,12 +77,14 @@ export default class RstDetail extends Component {
       this.setState({showConfirmation: false});
    }
 
-   handleUpVoteClick = (reviewId) => {
+   handleUpVoteClick = (rstId, reviewId) => {
       // TODO: Integrate upvotes
+      this.props.modVot(rstId, reviewId, 1);
    }
 
-   handleDownVoteClick = (reviewId) => {
+   handleDownVoteClick = (rstId, reviewId) => {
       // TODO: Integrate downvotes
+      this.props.modVot(rstId, reviewId, -1);
    }
  
    render() {
@@ -111,8 +113,8 @@ export default class RstDetail extends Component {
                upVotes={rev.numUpvotes || 0}
                auVote={myVot}
                name={rev.firstName + " " + rev.lastName}
-               handleUpVote={() => this.handleUpVoteClick(rev.id)}
-               handleDownVote={() => this.handleDownVoteClick(rev.id)} />);
+               handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id)}
+               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)} />);
          });
       }
 
@@ -152,12 +154,12 @@ const RevItem = function (props) {
             <Row>
                <Col sm={1} style={{paddingRight: "0px"}}>
                   <Row>
-                        <FontAwesomeIcon 
-                           onClick={props.handleUpVote}
-                           style={{padding: "0px", marginBottom: "-25px"}} 
-                           icon={upVote} 
-                           color={props.auVote === 1 ? "green" : ""}
-                           size="5x"/>
+                     <FontAwesomeIcon 
+                        onClick={props.handleUpVote}
+                        style={{padding: "0px", marginBottom: "-25px"}} 
+                        icon={upVote} 
+                        color={props.auVote === 1 ? "green" : ""}
+                        size="5x"/>
                   </Row>
                   <Row>
                      <h4 style={
@@ -168,12 +170,13 @@ const RevItem = function (props) {
                   </Row>
                   <Row>
                      <FontAwesomeIcon 
-                     onClick={props.handleDownVote}
-                     class="DownVoteButton"
-                     className="DownVoteButton"
-                     style={{padding: "0px", marginTop: "-25px", marginBottom: "-10px"}} 
-                     icon={downVote} 
-                     size="5x"/>
+                        onClick={props.handleDownVote}
+                        class="DownVoteButton"
+                        className="DownVoteButton"
+                        style={{padding: "0px", marginTop: "-25px", marginBottom: "-10px"}} 
+                        icon={downVote} 
+                        color={props.auVote === -1 ? "red" : ""}
+                        size="5x"/>
                   </Row>
                </Col>
                <Col sm={2} style={{paddingLeft: "0px"}}>

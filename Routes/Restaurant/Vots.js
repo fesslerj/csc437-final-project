@@ -4,6 +4,14 @@ var router = Express.Router({caseSensitive: true});
 var async = require('async');
 var Voting = require('./VoteWeighing.js');
 
+// HTTP error code constants
+var httpOk = 200;
+var errBadReq = 400;
+var errUnauthorized = 401;
+var errForbidden = 403;
+var errNotFound = 404;
+var errServer = 500;
+
 router.baseURL = '/Vots';
 
 router.get('/:rstId/:revId', function(req, res) {
@@ -53,10 +61,11 @@ router.post('/:rstId/:revId', function(req, res) {
    var rstId = typeof(req.params.rstId) === 'number' ? releaseEvents.params.rstId
     : (typeof(req.params.rstId)==='string' && /^\d+$/.test(req.params.rstId) ? parseInt(req.params.rstId, 10)
     : -1);
+   var prsId = req.session && req.session.id;
 
    async.waterfall([
    function(cb) {
-      vld.checkPrsOK(prsId, cb)
+      vld.checkLoggedIn(cb)
        && vld.hasFields(body, ["voteValue"], cb)
        && vld.chain(typeof(body.voteValue) === 'number' && (body.voteValue === -1 || body.voteValue === 1),
        Tags.badValue, ['voteValue'])
@@ -80,7 +89,7 @@ router.post('/:rstId/:revId', function(req, res) {
       }
    },
    function(insRes, fields, cb) {
-      res.status(httpOk).end();
+      res.location(`/Vots/${rstId}/${revId}`).end();
       cb();
    }],
 
