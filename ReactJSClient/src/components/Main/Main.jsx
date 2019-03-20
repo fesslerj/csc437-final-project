@@ -32,16 +32,21 @@ class Main extends Component {
          <div>
             <div>
                <Navbar>
+                  
                   <Navbar.Toggle />
                   <Navbar.Collapse>
+                  
                      <Nav>
+                        <a className="navbar-left" style={{marginRight: "10px"}} href="/allRsts">
+                           <img style={{marginTop: "7px", maxHeight: "30px"}} src="/r3logo.png"></img>
+                        </a>
                         {this.signedIn() ?
                            [
-                              <LinkContainer key={"catg"} to="/allCatgs">
-                                 <NavItem>Categories</NavItem>
-                              </LinkContainer>,
                               <LinkContainer key={"all"} to="/allRsts">
                                  <NavItem>All Restaurants</NavItem>
+                              </LinkContainer>,
+                              <LinkContainer key={"catg"} to="/allCatgs">
+                                 <NavItem>Categories</NavItem>
                               </LinkContainer>,
                               <LinkContainer key={"my"} to="/myRsts">
                                  <NavItem>My Restaurants</NavItem>
@@ -49,11 +54,11 @@ class Main extends Component {
                            ]
                            :
                            [
-                              <LinkContainer key={"catg"} to="/allCatgs">
-                                 <NavItem>Categories</NavItem>
-                              </LinkContainer>,
                               <LinkContainer key={"all"} to="/allRsts">
                                  <NavItem>All Restaurants</NavItem>
+                              </LinkContainer>,
+                              <LinkContainer key={"catg"} to="/allCatgs">
+                                 <NavItem>Categories</NavItem>
                               </LinkContainer>
                            ]
                         }

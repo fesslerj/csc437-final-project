@@ -280,6 +280,18 @@ export function postRev(rstId, rev) {
     .then(({jsonBody}) => Object.assign({}, jsonBody, { id: retRevId }));
 }
 
+/**
+ * Post a new owner response to a rev
+ * @param {(number|string)} revId the rev ID
+ * @param {{content: string}} rsp the response data to post
+ * @returns {Promise<RevGetDataWithId>}
+ */
+export function postRevRsp(revId, rsp) {
+   return post(`Revs/${revId}`, rsp, true)
+   .then(() => get(`Revs/${revId}`))
+   .then(({jsonBody}) => Object.assign({}, jsonBody, { id: revId }));
+}
+
 
 /**
  * Get the user's vote on a review

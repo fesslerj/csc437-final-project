@@ -312,7 +312,7 @@ router.get('/:rstId/Revs', function(req, res) {
                ownerResponse: (nr.ownerResponseWhenMade
                 && nr.ownerResponseContent)
                 ? {
-                whenMade: nr.ownerResponseWhenMade,
+                whenMade: nr.ownerResponseWhenMade ? nr.ownerResponseWhenMade.getTime() : 0,
                 content: nr.ownerResponseContent
                 }
                 : null

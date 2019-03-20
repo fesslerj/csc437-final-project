@@ -165,6 +165,19 @@ export function addRev(rstId, newRev) {
 }
 
 /**
+ * Post a new review to a rst
+ * @param {(number|string)} revId the rev ID
+ * @param {{ownerResponse: string}} revRsp the review response data (ownerResponse)
+ */
+export function addRevRsp(revId, rstId, revRsp) {
+   return (dispatch, prevState) => {
+      api.postRevRsp(revId, revRsp)
+      .then((rev) => dispatch({type: 'UPDATE_REV', rstId, revId, rev}))
+      .catch(error => dispatch(prepareError('ADD_REV_RSP_ERR', error)));
+   };
+}
+
+/**
  * Get a user's vote on a given review
  * @param {(number|string)} rstId the restaurant ID
  * @param {(number|string)} revId the review ID

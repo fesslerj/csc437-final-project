@@ -11,6 +11,7 @@ function Errs(state = [], action) {
    case 'UPDATE_REVS_ERR':
    case 'UPDATE_REV_ERR':
    case 'ADD_REV_ERR':
+   case 'ADD_REV_RSP_ERR':
    case 'UPDATE_VOT_ERR':
    case 'COMPONENT_ERR':
       return state.concat(action.errors);

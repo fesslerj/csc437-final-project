@@ -4,9 +4,9 @@ use radical_restaurants;
 
 create table Person (
    id int auto_increment primary key,
-   firstName varchar(30),
-   lastName varchar(30) not null,
-   email varchar(30) not null,
+   firstName varchar(50),
+   lastName varchar(50) not null,
+   email varchar(160) not null,
    password varchar(50),
    whenRegistered datetime not null,
    termsAccepted datetime,
