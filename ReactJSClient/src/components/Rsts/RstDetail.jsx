@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col, Row, Button } from 'react-bootstrap';
 import RevModal from '../Revs/RevModal';
+import RevRspModal from '../Revs/RevRspModal'
 import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
@@ -42,19 +43,31 @@ export default class RstDetail extends Component {
 
       this.state = {
          showModal: false,
+         showRspModal: false,
          showConfirmation: false,
       }
    }
  
-    // Open a model
-    openModal = () => {
-       this.setState({ showModal: true });
-    }
- 
+   // Open a model
+   openModal = () => {
+      this.setState({ showModal: true });
+   }
+
    modalDismiss = (result) => {
       if (result.status === "Ok") {
          // do something here
          this.newRev(result);
+      }
+      this.setState({ showModal: false });
+   }
+
+   openRspModal = () => {
+      this.setState({ showRspModal: true });
+   }
+
+   rspModalDismiss = (result) => {
+      if (result.status === "Ok") {
+         // do something here
       }
       this.setState({ showModal: false });
    }
@@ -90,6 +103,7 @@ export default class RstDetail extends Component {
 
    handleAddResponseClick  = (rstId, reviewId) => {
       // TODO: Integrate reponse
+      this.openRspModal();
    }
  
    render() {
@@ -148,6 +162,10 @@ export default class RstDetail extends Component {
                title={"New Review"}
                rev={null}
                onDismiss={this.modalDismiss} />
+            <RevRspModal
+               showModal={this.state.showRspModal}
+               rsp={null}
+               onDismiss={this.rspModalDismiss} />
          </section>
       );
    }
