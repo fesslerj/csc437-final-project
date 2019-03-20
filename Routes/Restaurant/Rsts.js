@@ -298,7 +298,7 @@ router.get('/:rstId/Revs', function(req, res) {
 
       if (!erred) {
          newRevs = newRevs.map(nr => {
-            var weightedVotes = nr.votes.reduce(Voting.WeightedVoteReducer, 1.0);
+            var weightedVotes = nr.votes.reduce(Voting.WeightedVoteReducer, 0.0);
             var revObj = {
                id: nr.id,
                whenMade: nr.whenMade ? nr.whenMade.getTime() : 0,

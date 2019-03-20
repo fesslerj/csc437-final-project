@@ -48,7 +48,7 @@ router.get('/:revId', function(req, res) {
    },
    function(vots, fields, cb) {
       // id     rstId     prsId     voteValue     count     sum
-      var weightedVotes = vots.reduce(Voting.WeightedVoteReducer, 1.0);
+      var weightedVotes = vots.reduce(Voting.WeightedVoteReducer, 0.0);
       var revObj = {
          rstId: revResult.rstId,
          whenMade: revResult.whenMade ? revResult.whenMade.getTime() : 0,
