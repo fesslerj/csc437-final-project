@@ -120,12 +120,14 @@ export function delRst(rstId) {
  * nonnegative integer Number), or else a Date.
  * @param {?(number|string)} [num] OPTIONAL: Maximum number of reviews to
  * return.
+ * @param {?function} [cb] OPTIONAL callback
  */
 export function updateRevs(rstId, dateTime = undefined,
- num = undefined) {
+ num = undefined, cb = undefined) {
    return (dispatch, prevState) => {
       api.getRevs(rstId, dateTime, num)
       .then((revs) => dispatch({ type: 'UPDATE_REVS', rstId, revs}))
+      .then(() => {if (cb) cb();})
       .catch(error => dispatch(prepareError('UPDATE_REVS_ERR', error)));
    };
 }
@@ -142,6 +144,19 @@ export function addRev(rstId, newRev) {
       .catch(error => dispatch(prepareError('ADD_REV_ERR', error)));
    };
 }
+
+/**
+ * Get a user's vote on a given review
+ * @param {(number|string)} rstId the restaurant ID
+ * @param {(number|string)} revId the review ID
+ */
+export function updateVot(rstId, revId) {
+     return (dispatch, prevState) => {
+        api.getVot(rstId, revId)
+        .then((vote) => dispatch({ type: 'UPDATE_VOT', revId, vote}))
+        .catch(error => dispatch(prepareError('UPDATE_VOT_ERR', error)));
+     };
+  }
 
 /**
  * Clear all errors
