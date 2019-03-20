@@ -6,6 +6,8 @@ var Voting = require('./VoteWeighing.js');
 
 router.baseURL = '/Revs';
 
+var ownerResponseMaxLength = 5000;
+
 router.get('/:revId', function(req, res) {
    var vld = req.validator;
    var cnn = req.cnn;
@@ -62,7 +64,7 @@ router.get('/:revId', function(req, res) {
          ownerResponse: (revResult.ownerResponseWhenMade
           && revResult.ownerResponseContent)
           ? {
-          whenMade: revResult.ownerResponseWhenMade,
+          whenMade: revResult.ownerResponseWhenMade ? revResult.ownerResponseWhenMade.getTime() : 0,
           content: revResult.ownerResponseContent
           }
           : null
@@ -72,6 +74,37 @@ router.get('/:revId', function(req, res) {
    }],
 
    function(err) {
+      req.cnn.release();
+   });
+});
+
+router.post('/:revId', function(req, res) {
+   var vld = req.validator;
+   var cnn = req.cnn;
+   var body = req.body;
+   var revId = req.params.revId;
+
+   async.waterfall([
+   function(cb) {
+      vld.checkLoggedIn(cb)
+       && vld.hasFields(body, ["ownerResponse"], cb)
+       && vld.check(typeof(body.ownerResponse) === 'string'
+       && body.ownerResponse.length <= ownerResponseMaxLength,
+       Tags.badValue, ["ownerResponse"], cb)
+       && cnn.chkQry('select rstId from Review where id = ?', [revId], cb);
+   },
+   function(revs, fields, cb) {
+      vld.check(revs.length === 1, Tags.notFound, null, cb)
+         && cnn.chkQry('select ownerId from Restaurant where id = ?', [revs[0].rstId], cb);
+   },
+   function(rsts, fields, cb) {
+      vld.check(rsts.length === 1, Tags.notFound, null, cb)
+         && vld.checkPrsOK(rsts[0].ownerId, cb)
+         && cnn.chkQry("update Review set ownerResponseContent = ?, ownerResponseWhenMade = ? where id = ?",
+          [body.ownerResponse, new Date(), revId], cb);
+   }],
+   function(err) {
+      !err && res.status(200).end();
       req.cnn.release();
    });
 });

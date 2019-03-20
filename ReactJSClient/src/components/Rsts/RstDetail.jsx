@@ -71,9 +71,18 @@ export default class RstDetail extends Component {
 
    rspModalDismiss = (result) => {
       if (result.status === "Ok") {
-         // do something here
+         this.addRevRsp(result);
       }
       this.setState({ showRspModal: false });
+   }
+
+   addRevRsp(result) {
+      let matchId = this.props.match.params.id;
+      
+      if (typeof(matchId) === 'string' && /^\d+$/.test(matchId))
+         matchId = parseInt(matchId, 10);
+
+      this.props.addRevRsp(this.state.rspRevId, matchId, result);
    }
  
    newRev(result) {
@@ -107,6 +116,7 @@ export default class RstDetail extends Component {
 
    handleAddResponseClick  = (rstId, reviewId) => {
       // TODO: Integrate reponse
+      this.setState({rspRevId: reviewId});
       this.openRspModal();
    }
  
@@ -139,6 +149,7 @@ export default class RstDetail extends Component {
                handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id)}
                handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)}
                currentOwner={this.props.Prss.id && myRst.ownerId === this.props.Prss.id}
+               ownerResponse={rev.ownerResponse}
                addResponse={() => this.handleAddResponseClick(myRst.id, rev.id) } />);
             });
       }

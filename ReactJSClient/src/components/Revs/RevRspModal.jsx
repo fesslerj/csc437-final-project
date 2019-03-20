@@ -14,7 +14,7 @@ export default class RevRspModal extends Component {
    close = (result) => {
       this.props.onDismiss && this.props.onDismiss({
          status: result,
-         content: this.state.revRspContent
+         ownerResponse: this.state.revRspContent
       });
    }
 
