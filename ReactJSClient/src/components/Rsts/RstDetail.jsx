@@ -78,12 +78,14 @@ export default class RstDetail extends Component {
 
    handleUpVoteClick = (rstId, reviewId) => {
       // TODO: Integrate upvotes
-      this.props.modVot(rstId, reviewId, 1);
+      if(this.props.Prss.id)
+         this.props.modVot(rstId, reviewId, 1);
    }
 
    handleDownVoteClick = (rstId, reviewId) => {
       // TODO: Integrate downvotes
-      this.props.modVot(rstId, reviewId, -1);
+      if(this.props.Prss.id)
+         this.props.modVot(rstId, reviewId, -1);
    }
  
    render() {
