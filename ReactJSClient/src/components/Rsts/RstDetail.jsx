@@ -288,8 +288,8 @@ const RevItem = function (props) {
                      <Col sm={8}>
                         <div style={{padding: "3px", 
                          border: "2px solid lightgray", borderRadius: "3px"}}>
-                           <i>{props.rstTitle} responded on 
-                           {new Intl.DateTimeFormat('us',
+                           <i>{props.rstTitle} responded on {
+                           new Intl.DateTimeFormat('us',
                            {
                               year: "numeric", month: "short", day: "numeric"
                            })
