@@ -91,7 +91,8 @@ export default class RstDetail extends Component {
       if (typeof(matchId) === 'string' && /^\d+$/.test(matchId))
          matchId = parseInt(matchId, 10);
 
-      this.props.addRev(matchId, { title: result.title, content: result.content, rating: parseInt(result.rating, 10) });
+      this.props.addRev(matchId, { title: result.title, 
+         content: result.content, rating: parseInt(result.rating, 10) });
    }
 
    openConfirmation = (rst) => {
@@ -106,10 +107,12 @@ export default class RstDetail extends Component {
       // TODO: Integrate upvotes
       if ('id' in this.props.Prss) {
          if (curVot === 1) {
-            this.props.delVot(rstId, reviewId, () => this.props.updateRev(reviewId));
+            this.props.delVot(rstId, reviewId, () => 
+             this.props.updateRev(reviewId));
          }
          else {
-            this.props.modVot(rstId, reviewId, 1, () => this.props.updateRev(reviewId));
+            this.props.modVot(rstId, reviewId, 1, () => 
+             this.props.updateRev(reviewId));
          }
       }
    }
@@ -118,10 +121,12 @@ export default class RstDetail extends Component {
       // TODO: Integrate downvotes
       if ('id' in this.props.Prss) {
          if (curVot === -1) {
-            this.props.delVot(rstId, reviewId, () => this.props.updateRev(reviewId));
+            this.props.delVot(rstId, reviewId, () => 
+             this.props.updateRev(reviewId));
          }
          else {
-            this.props.modVot(rstId, reviewId, -1, () => this.props.updateRev(reviewId));
+            this.props.modVot(rstId, reviewId, -1, () => 
+             this.props.updateRev(reviewId));
          }
       }
    }
@@ -158,22 +163,32 @@ export default class RstDetail extends Component {
                upVotes={(rev.numUpvotes || 0) + myVot}
                auVote={myVot}
                name={rev.firstName + " " + rev.lastName}
-               handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id, myVot)}
-               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id, myVot)}
-               currentOwner={this.props.Prss.id && myRst.ownerId === this.props.Prss.id}
+               handleUpVote={() => 
+                this.handleUpVoteClick(myRst.id, rev.id, myVot)}
+               handleDownVote={() => 
+                this.handleDownVoteClick(myRst.id, rev.id, myVot)}
+               currentOwner={this.props.Prss.id && 
+                myRst.ownerId === this.props.Prss.id}
                ownerResponse={rev.ownerResponse}
                rstTitle={myRst.title}
-               addResponse={() => this.handleAddResponseClick(myRst.id, rev.id) } />);
+               addResponse={() => 
+                this.handleAddResponseClick(myRst.id, rev.id) } />);
             });
       }
 
       return (
          <section className="container">
-            <h1>{(myRst && myRst.title) || ''} <small class="text-muted">{(myRst && myRst.category) || ''}</small></h1>
+            <h1>{(myRst && myRst.title) || ''} 
+               <small class="text-muted">
+                  {(myRst && myRst.category) || ''}
+               </small>
+            </h1>
             <h4>
                <a href={(myRst && myRst.url) ? 
-                (myRst.url.indexOf("http://") === 0 || myRst.url.indexOf("https://") === 0 
-                ? myRst.url : 'http://' + myRst.url) : ''} target="_blank"  rel="noopener noreferrer">
+                 (myRst.url.indexOf("http://") === 0 || 
+                 myRst.url.indexOf("https://") === 0 
+                ? myRst.url : 'http://' + myRst.url) : ''} 
+                 target="_blank"  rel="noopener noreferrer">
                   {(myRst && myRst.url) || ''}
                </a>
             </h4>
@@ -181,7 +196,8 @@ export default class RstDetail extends Component {
             <ListGroup>
                {revItems}
             </ListGroup>
-            <Button bsStyle={this.props.Prss.id ? "primary" : "primary hidden"} onClick={() => this.openModal()}>
+            <Button bsStyle={this.props.Prss.id ? "primary" : "primary hidden"} 
+             onClick={() => this.openModal()}>
                New Review
             </Button>
             {/* Modal for creating and change rst */}
@@ -226,7 +242,9 @@ const RevItem = function (props) {
                         onClick={props.handleDownVote}
                         class="DownVoteButton"
                         className="DownVoteButton"
-                        style={{padding: "0px", marginTop: "-25px", marginBottom: "-10px"}} 
+                        style={{padding: "0px", 
+                           marginTop: "-25px", 
+                           marginBottom: "-10px"}} 
                         icon={downVote} 
                         color={props.auVote === -1 ? "red" : ""}
                         size="5x"/>
@@ -235,12 +253,16 @@ const RevItem = function (props) {
                <Col sm={2} style={{paddingLeft: "0px"}}>
                   <Row>
                      <Rating 
-                        emptySymbol={<FontAwesomeIcon icon={farStar} size="lg"/>}
-                        fullSymbol={<FontAwesomeIcon icon={fasStar} size="lg" color="gold" />}
+                        emptySymbol={
+                           <FontAwesomeIcon icon={farStar} size="lg"/>}
+                        fullSymbol={
+                           <FontAwesomeIcon icon={fasStar} size="lg" 
+                            color="gold" />}
                         initialRating={props.rating}
                         readonly={true}
                      />
-                     <p>{props.name}<br></br><a href={"mailto:" + props.email}>{props.email}</a></p>
+                     <p>{props.name}<br></br><a href={"mailto:" + 
+                      props.email}>{props.email}</a></p>
                   </Row>
                </Col>
                <Col sm={9} style={{paddingLeft: "0px"}}>
@@ -248,7 +270,8 @@ const RevItem = function (props) {
                      <h3 style={{padding: "0px", margin: "0px"}}>
                         {props.title}
                      </h3>
-                     <p style={{color: "gray", marginBottom: "0px"}}>{new Intl.DateTimeFormat('us',
+                     <p style={{color: "gray", marginBottom: "0px"}}>
+                     {new Intl.DateTimeFormat('us',
                         {
                            year: "numeric", month: "short", day: "numeric"
                         })
@@ -257,21 +280,28 @@ const RevItem = function (props) {
                         {props.content}
                      </p>
                   </Row>
-                  <Row className={props.ownerResponse ? "" : "hidden"} style={{marginTop: "10px"}}>
+                  <Row className={props.ownerResponse ? "" : "hidden"} 
+                   style={{marginTop: "10px"}}>
                      <Col sm={8}>
-                        <div style={{padding: "3px", border: "2px solid lightgray", borderRadius: "3px"}}>
-                           <i>{props.rstTitle} responded on {new Intl.DateTimeFormat('us',
-                        {
-                           year: "numeric", month: "short", day: "numeric"
-                        })
-                        .format(new Date(props.ownerResponse && props.ownerResponse.whenMade))}:</i>
-                           <p>"{props.ownerResponse && props.ownerResponse.content}"</p>
+                        <div style={{padding: "3px", 
+                         border: "2px solid lightgray", borderRadius: "3px"}}>
+                           <i>{props.rstTitle} responded on 
+                           {new Intl.DateTimeFormat('us',
+                           {
+                              year: "numeric", month: "short", day: "numeric"
+                           })
+                           .format(new Date(props.ownerResponse 
+                            && props.ownerResponse.whenMade))}:</i>
+                           <p>"{props.ownerResponse && 
+                              props.ownerResponse.content}"</p>
                         </div>
                      </Col>
                   </Row>
-                  <Row bsStyle="pull-right" style={{paddingRight:"60px"}} className="pull-right">
+                  <Row bsStyle="pull-right" 
+                   style={{paddingRight:"60px"}} className="pull-right">
                      <Button 
-                     bsStyle={props.currentOwner && !props.ownerResponse ? "primary" : "primary hidden"}
+                     bsStyle={props.currentOwner && 
+                        !props.ownerResponse ? "primary" : "primary hidden"}
                      onClick={props.addResponse}>
                         Add Response
                      </Button>
