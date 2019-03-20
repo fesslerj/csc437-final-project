@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col, Row, Button } from 'react-bootstrap';
 import RevModal from '../Revs/RevModal';
+import RevRspModal from '../Revs/RevRspModal'
 import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
@@ -45,21 +46,43 @@ export default class RstDetail extends Component {
 
       this.state = {
          showModal: false,
+         showRspModal: false,
+         rspRevId: null,
          showConfirmation: false,
       }
    }
  
-    // Open a model
-    openModal = () => {
-       this.setState({ showModal: true });
-    }
- 
+   // Open a model
+   openModal = () => {
+      this.setState({ showModal: true });
+   }
+
    modalDismiss = (result) => {
       if (result.status === "Ok") {
          // do something here
          this.newRev(result);
       }
       this.setState({ showModal: false });
+   }
+
+   openRspModal = () => {
+      this.setState({ showRspModal: true });
+   }
+
+   rspModalDismiss = (result) => {
+      if (result.status === "Ok") {
+         this.addRevRsp(result);
+      }
+      this.setState({ showRspModal: false });
+   }
+
+   addRevRsp(result) {
+      let matchId = this.props.match.params.id;
+      
+      if (typeof(matchId) === 'string' && /^\d+$/.test(matchId))
+         matchId = parseInt(matchId, 10);
+
+      this.props.addRevRsp(this.state.rspRevId, matchId, result);
    }
  
    newRev(result) {
@@ -90,6 +113,12 @@ export default class RstDetail extends Component {
       if ('id' in this.props.Prss)
          this.props.modVot(rstId, reviewId, -1, () => this.props.updateRev(reviewId));
    }
+
+   handleAddResponseClick  = (rstId, reviewId) => {
+      // TODO: Integrate reponse
+      this.setState({rspRevId: reviewId});
+      this.openRspModal();
+   }
  
    render() {
       let matchId = this.props.match.params.id;
@@ -118,8 +147,12 @@ export default class RstDetail extends Component {
                auVote={myVot}
                name={rev.firstName + " " + rev.lastName}
                handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id)}
-               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)} />);
-         });
+               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)}
+               currentOwner={this.props.Prss.id && myRst.ownerId === this.props.Prss.id}
+               ownerResponse={rev.ownerResponse}
+               rstTitle={myRst.title}
+               addResponse={() => this.handleAddResponseClick(myRst.id, rev.id) } />);
+            });
       }
 
       return (
@@ -145,6 +178,10 @@ export default class RstDetail extends Component {
                title={"New Review"}
                rev={null}
                onDismiss={this.modalDismiss} />
+            <RevRspModal
+               showModal={this.state.showRspModal}
+               rsp={null}
+               onDismiss={this.rspModalDismiss} />
          </section>
       );
    }
@@ -207,6 +244,25 @@ const RevItem = function (props) {
                      <p style={{padding: "0px", margin: "0px"}}>
                         {props.content}
                      </p>
+                  </Row>
+                  <Row className={props.ownerResponse ? "" : "hidden"} style={{marginTop: "10px"}}>
+                     <Col sm={8}>
+                        <div style={{padding: "3px", border: "2px solid lightgray", borderRadius: "3px"}}>
+                           <i>{props.rstTitle} responded on {new Intl.DateTimeFormat('us',
+                        {
+                           year: "numeric", month: "short", day: "numeric"
+                        })
+                        .format(new Date(props.ownerResponse && props.ownerResponse.whenMade))}:</i>
+                           <p>"{props.ownerResponse && props.ownerResponse.content}"</p>
+                        </div>
+                     </Col>
+                  </Row>
+                  <Row bsStyle="pull-right" style={{paddingRight:"60px"}} className="pull-right">
+                     <Button 
+                     bsStyle={props.currentOwner && !props.ownerResponse ? "primary" : "primary hidden"}
+                     onClick={props.addResponse}>
+                        Add Response
+                     </Button>
                   </Row>
                </Col>
             </Row>
