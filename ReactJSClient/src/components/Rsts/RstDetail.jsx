@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem, Col, Row, Button } from 'react-bootstrap';
 import RevModal from '../Revs/RevModal';
 import RevRspModal from '../Revs/RevRspModal'
@@ -178,9 +179,11 @@ export default class RstDetail extends Component {
 
       return (
          <section className="container">
-            <h1>{(myRst && myRst.title) || ''} 
+            <h1>{(myRst && myRst.title) + ' ' || ''} 
                <small class="text-muted">
-                  {(myRst && myRst.category) || ''}
+                  <Link to={`/Catg/${myRst && myRst.category}`}>
+                     {myRst && myRst.category}
+                  </Link>
                </small>
             </h1>
             <h4>
