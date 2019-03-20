@@ -114,7 +114,7 @@ export default class RstDetail extends Component {
                content={rev.content}
                title={rev.title}
                rating={rev.rating}
-               upVotes={rev.numUpvotes || 0}
+               upVotes={(rev.numUpvotes || 0) + myVot}
                auVote={myVot}
                name={rev.firstName + " " + rev.lastName}
                handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id)}
