@@ -252,6 +252,16 @@ export function getRevs(rstId, dateTime = undefined, num = undefined) {
 }
 
 /**
+ * Retrieves a single review
+ * @param {(number|string)} rstId ID of the review to fetch
+ * @returns {Promise<RevGetDataWithId>}
+ */
+export function getRev(revId) {
+   return get(`Revs/${revId}`, false)
+    .then(({jsonBody}) => jsonBody);
+}
+
+/**
  * Post a new review to a rst
  * @param {(number|string)} rstId the rst ID
  * @param {{content: string}} rev the review data to post
