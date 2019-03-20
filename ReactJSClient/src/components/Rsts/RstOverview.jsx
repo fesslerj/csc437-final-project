@@ -62,7 +62,8 @@ export default class RstOverview extends Component {
    }
 
    render() {
-      let matchId = this.props.byCatg ? this.props.match.params.catg : undefined;
+      let matchId = this.props.byCatg ? 
+       this.props.match.params.catg : undefined;
 
       let rstItems = [];
 
@@ -86,11 +87,14 @@ export default class RstOverview extends Component {
 
       return (
          <section className="container">
-            <h1>{matchId || (this.props.userOnly ? 'My Radical' : 'Radical')} Restaurants</h1>
+            <h1>{matchId || (this.props.userOnly ? 'My Radical' : 'Radical')}
+             Restaurants</h1>
             <ListGroup>
                {rstItems}
             </ListGroup>
-            <Button bsStyle={this.props.Prss.id ? "primary" : "primary hidden"} onClick={() => this.openModal()}>
+            <Button 
+             bsStyle={this.props.Prss.id ? "primary" : "primary hidden"} 
+             onClick={() => this.openModal()}>
                New Restaurant
             </Button>
             {/* Modal for creating and change rst */}
@@ -121,7 +125,10 @@ const RstItem = function (props) {
             <Col sm={4}><Link to={"/RstDetail/" + props.id}>{props.title}
                </Link>
             </Col>
-            {props.category ? <Col key={`${props.id}/catg`} sm={3}>{<a href={"/Catg/" + props.category}>{props.category}</a>||''}</Col> : ''}
+            {props.category ? 
+               <Col key={`${props.id}/catg`} sm={3}>{
+                  <a href={"/Catg/" + props.category}>{props.category}</a>||''}
+               </Col> : ''}
             {props.showControls ?
                <div className="pull-right">
                   <Button bsSize="small" onClick={props.onDelete}>
