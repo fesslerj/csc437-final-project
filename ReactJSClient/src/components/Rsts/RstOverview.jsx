@@ -9,6 +9,7 @@ import './RstOverview.css';
 export default class RstOverview extends Component {
    constructor(props) {
       super(props);
+
       this.props.updateRsts();
       this.state = {
          showModal: false,
@@ -61,17 +62,21 @@ export default class RstOverview extends Component {
    }
 
    render() {
+      let matchId = this.props.byCatg ? this.props.match.params.catg : undefined;
+
       let rstItems = [];
 
       let allRsts = this.props.Rsts.concat([]).sort((a,b) =>
          b.lastReview - a.lastReview);
 
       allRsts.forEach(rst => {
-         if (!this.props.userOnly || this.props.Prss.id === rst.ownerId)
+         if ((!this.props.userOnly || this.props.Prss.id === rst.ownerId)
+          && (!matchId || rst.category === matchId))
             rstItems.push(<RstItem
                key={rst.id}
                id={rst.id}
                title={rst.title}
+               category={!matchId ? rst.category : undefined}
                lastReview={rst.lastReview}
                showControls={rst.ownerId === this.props.Prss.id
                 || this.props.Prss.role}
@@ -81,7 +86,7 @@ export default class RstOverview extends Component {
 
       return (
          <section className="container">
-            <h1>Radical Restaurants</h1>
+            <h1>{matchId || (this.props.userOnly ? 'My Radical' : 'All Radical')} Restaurants</h1>
             <ListGroup>
                {rstItems}
             </ListGroup>
@@ -92,6 +97,7 @@ export default class RstOverview extends Component {
             <RstModal
                showModal={this.state.showModal}
                title={this.state.editRst ? "Edit title" : "New Restaurant"}
+               catg={matchId}
                rst={this.state.editRst}
                onDismiss={this.modalDismiss} />
             <ConfDialog
@@ -115,7 +121,8 @@ const RstItem = function (props) {
             <Col sm={4}><Link to={"/RstDetail/" + props.id}>{props.title}
                </Link>
             </Col>
-            <Col sm={4}>{props.lastReview ? new Intl.DateTimeFormat('us',
+            {props.category ? <Col key={`${props.id}/catg`} sm={3}>{props.category||''}</Col> : ''}
+            <Col sm={3}>{props.lastReview ? new Intl.DateTimeFormat('us',
                {
                   year: "numeric", month: "short", day: "numeric",
                   hour: "2-digit", minute: "2-digit", second: "2-digit"
