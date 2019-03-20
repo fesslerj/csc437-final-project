@@ -87,7 +87,7 @@ export default class RstOverview extends Component {
 
       return (
          <section className="container">
-            <h1>{matchId || (this.props.userOnly ? 'My Radical' : 'Radical')}
+            <h1>{matchId || (this.props.userOnly ? 'My Radical ' : 'Radical ')}
              Restaurants</h1>
             <ListGroup>
                {rstItems}
