@@ -36,7 +36,7 @@ export default class RstDetail extends Component {
             a_myRst = this.props.Rsts.find(cur => cur.id === a_matchId);
 
             if (a_myRst && this.props.Revs.hasOwnProperty(a_myRst.id)) {
-               this.props.Revs[a_myRst.id].forEach(rev => this.props.updateVot(rev.id, this.props.Prss.id));
+               this.props.Revs[a_myRst.id].forEach(rev => this.props.updateVot(a_myRst.id, rev.id));
             }
          });
       }

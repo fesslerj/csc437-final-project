@@ -273,12 +273,12 @@ export function postRev(rstId, rev) {
 
 /**
  * Get the user's vote on a review
+ * @param {(number|string)} rstId restaurant ID
  * @param {(number|string)} revId review id
- * @param {(number|string)} userId user ID
  * @returns {Promise<number>} resolves to 1/0/-1
  */
-export function getVot(revId, userId) {
-   return get(`Vots/${revId}/${userId}`)
+export function getVot(rstId, revId) {
+   return get(`Vots/${rstId}/${revId}`)
     .catch(err => {
       if (err instanceof FetchError || err.prototype === FetchError
        || err.name === 'FetchError') {

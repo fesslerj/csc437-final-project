@@ -147,12 +147,12 @@ export function addRev(rstId, newRev) {
 
 /**
  * Get a user's vote on a given review
+ * @param {(number|string)} rstId the restaurant ID
  * @param {(number|string)} revId the review ID
- * @param {(number|string)} userId the user ID
  */
-export function updateVot(revId, userId) {
+export function updateVot(rstId, revId) {
      return (dispatch, prevState) => {
-        api.getVot(revId, userId)
+        api.getVot(rstId, revId)
         .then((vote) => dispatch({ type: 'UPDATE_VOT', revId, vote}))
         .catch(error => dispatch(prepareError('UPDATE_VOT_ERR', error)));
      };
