@@ -44,6 +44,7 @@ export default class RstDetail extends Component {
       this.state = {
          showModal: false,
          showRspModal: false,
+         rspRevId: null,
          showConfirmation: false,
       }
    }
@@ -69,7 +70,7 @@ export default class RstDetail extends Component {
       if (result.status === "Ok") {
          // do something here
       }
-      this.setState({ showModal: false });
+      this.setState({ showRspModal: false });
    }
  
    newRev(result) {
