@@ -64,7 +64,8 @@ router.get('/:revId', function(req, res) {
          ownerResponse: (revResult.ownerResponseWhenMade
           && revResult.ownerResponseContent)
           ? {
-          whenMade: revResult.ownerResponseWhenMade ? revResult.ownerResponseWhenMade.getTime() : 0,
+          whenMade: revResult.ownerResponseWhenMade ?
+          revResult.ownerResponseWhenMade.getTime() : 0,
           content: revResult.ownerResponseContent
           }
           : null
@@ -95,12 +96,14 @@ router.post('/:revId', function(req, res) {
    },
    function(revs, fields, cb) {
       vld.check(revs.length === 1, Tags.notFound, null, cb)
-         && cnn.chkQry('select ownerId from Restaurant where id = ?', [revs[0].rstId], cb);
+         && cnn.chkQry('select ownerId from Restaurant where id = ?',
+         [revs[0].rstId], cb);
    },
    function(rsts, fields, cb) {
       vld.check(rsts.length === 1, Tags.notFound, null, cb)
          && vld.checkPrsOK(rsts[0].ownerId, cb)
-         && cnn.chkQry("update Review set ownerResponseContent = ?, ownerResponseWhenMade = ? where id = ?",
+         && cnn.chkQry("update Review set ownerResponseContent = ?, "
+          + "ownerResponseWhenMade = ? where id = ?",
           [body.ownerResponse, new Date(), revId], cb);
    }],
    function(err) {

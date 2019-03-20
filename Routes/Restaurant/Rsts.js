@@ -30,11 +30,13 @@ router.get('/', function(req, res) {
    async.waterfall([
    function(cb) {
       if (req.query.owner) {
-         req.cnn.chkQry('select id, title, ownerId, category, url, description, lastReview from '
+         req.cnn.chkQry('select id, title, ownerId, category, url, '
+            +'description, lastReview from '
             + 'Restaurant where ownerId = ?', [req.query.owner], cb);
       }
       else {
-         req.cnn.chkQry('select id, title, ownerId, category, url, description, lastReview from '
+         req.cnn.chkQry('select id, title, ownerId, category, url, '
+          +'description, lastReview from '
           + 'Restaurant', cb);
       }
    },
@@ -69,7 +71,8 @@ router.post('/', function(req, res) {
        && body.category.length
        && body.category.length <= rstCategoryMaxLength,
        Tags.badValue, ["category"], cb)
-       && (!body.description || (vld.check(typeof(body.description) === 'string'
+       && (!body.description || (vld.check(typeof(body.description) ===
+       'string'
        && body.description.length <= rstDescriptionMaxLength,
        Tags.badValue, ["description"], cb)))
        && cnn.chkQry('select * from Restaurant where title = ?', 
@@ -97,7 +100,8 @@ router.get('/:rstId', function(req, res) {
    async.waterfall([
    function(cb) {
        vld.check(/^\d+$/.test(req.params.rstId), Tags.notFound, null, cb)
-       && req.cnn.chkQry('select id, title, ownerId, category, url, description, lastReview from '
+       && req.cnn.chkQry('select id, title, ownerId, category, url, '
+       + 'description, lastReview from '
        + 'Restaurant where id = ?', [req.params.rstId], cb);
    },
    function(rsts, fields, cb) {
@@ -180,16 +184,21 @@ router.get('/:rstId/Revs', function(req, res) {
     + ' r.prsId = p.id where r.rstId = ?';
    var myQueryB = ' order by r.whenMade asc, r.id asc';*/
 
-   var myQueryA = 'SELECT hyrev.id, hyrev.firstName, hyrev.lastName, hyrev.whenMade, hyrev.email,'
-   + ' hyrev.content, hyrev.title, hyrev.rating, hyrev.ownerResponseWhenMade,'
-   + ' hyrev.ownerResponseContent, supcol.prsId AS supcolPrsId, supcol.voteValue, supcol.count, supcol.sum'
-   + ' FROM (SELECT rrr.id, ppp.firstName, ppp.lastName, rrr.whenMade, ppp.email,'
+   var myQueryA = 'SELECT hyrev.id, hyrev.firstName, hyrev.lastName, '
+   + ' hyrev.whenMade, hyrev.email,'
+   + ' hyrev.content, hyrev.title, hyrev.rating,'
+   + ' hyrev.ownerResponseWhenMade,'
+   + ' hyrev.ownerResponseContent, supcol.prsId AS supcolPrsId,'
+   + ' supcol.voteValue, supcol.count, supcol.sum'
+   + ' FROM (SELECT rrr.id, ppp.firstName, ppp.lastName, rrr.whenMade,'
+   + ' ppp.email,'
    + ' rrr.content, rrr.title, rrr.rating, rrr.ownerResponseWhenMade,'
    + ' rrr.ownerResponseContent FROM Review rrr join Person ppp on'
    + ' rrr.prsId = ppp.id where rrr.rstId = ?';
 
    var myQueryB = ' ORDER BY rrr.whenMade ASC, rrr.id ASC) hyrev'
-   + ' LEFT JOIN (SELECT outerv.id, outerv.rstId, outerv.revId, outerv.prsId, outerv.voteValue, pcol.count, pcol.sum'
+   + ' LEFT JOIN (SELECT outerv.id, outerv.rstId, outerv.revId,'
+   + ' outerv.prsId, outerv.voteValue, pcol.count, pcol.sum'
    + ' FROM Vote outerv'
    + ' JOIN (SELECT p.id, SUM(rcol.count) as count, SUM(rcol.sum) as sum'
    + ' FROM Person p'
@@ -197,9 +206,11 @@ router.get('/:rstId/Revs', function(req, res) {
    + ' FROM Review r'
    + ' JOIN (SELECT v.revId, COUNT(v.id) AS count, SUM(v.voteValue) AS sum'
    + ' FROM Vote v'
-   + ' GROUP BY v.revId) updown ON updown.revId = r.id) rcol ON rcol.prsId = p.id'
+   + ' GROUP BY v.revId) updown ON updown.revId = r.id) rcol ON'
+   + ' rcol.prsId = p.id'
    + ' GROUP BY p.id) pcol ON pcol.id = outerv.prsId'
-   + ' ORDER BY outerv.id, outerv.rstId, outerv.prsId) supcol ON supcol.revId = hyrev.id'
+   + ' ORDER BY outerv.id, outerv.rstId, outerv.prsId) supcol ON'
+   + ' supcol.revId = hyrev.id'
    + ' ORDER BY hyrev.whenMade ASC, hyrev.id ASC';
 
    var revResult = null;

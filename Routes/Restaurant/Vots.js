@@ -12,6 +12,8 @@ var errForbidden = 403;
 var errNotFound = 404;
 var errServer = 500;
 
+var baseTen = 10;
+
 router.baseURL = '/Vots';
 
 router.get('/:rstId/:revId', function(req, res) {
@@ -21,11 +23,15 @@ router.get('/:rstId/:revId', function(req, res) {
    + ' from Vote v'
    + ' where v.rstId = ? and v.revId = ? and v.prsId = ?';
 
-   var revId = typeof(req.params.revId) === 'number' ? releaseEvents.params.revId
-    : (typeof(req.params.revId)==='string' && /^\d+$/.test(req.params.revId) ? parseInt(req.params.revId, 10)
+   var revId = typeof(req.params.revId) === 'number' ?
+    req.params.revId
+    : (typeof(req.params.revId)==='string' && /^\d+$/.test(req.params.revId) ?
+    parseInt(req.params.revId, baseTen)
     : -1);
-   var rstId = typeof(req.params.rstId) === 'number' ? releaseEvents.params.rstId
-    : (typeof(req.params.rstId)==='string' && /^\d+$/.test(req.params.rstId) ? parseInt(req.params.rstId, 10)
+   var rstId = typeof(req.params.rstId) === 'number' ?
+    req.params.rstId
+    : (typeof(req.params.rstId)==='string' && /^\d+$/.test(req.params.rstId) ?
+    parseInt(req.params.rstId, baseTen)
     : -1);
    
    var revResult = null;
@@ -55,19 +61,24 @@ router.post('/:rstId/:revId', function(req, res) {
    + ' from Vote v'
    + ' where v.rstId = ? and v.revId = ? and v.prsId = ?';
 
-   var revId = typeof(req.params.revId) === 'number' ? releaseEvents.params.revId
-    : (typeof(req.params.revId)==='string' && /^\d+$/.test(req.params.revId) ? parseInt(req.params.revId, 10)
-    : -1);
-   var rstId = typeof(req.params.rstId) === 'number' ? releaseEvents.params.rstId
-    : (typeof(req.params.rstId)==='string' && /^\d+$/.test(req.params.rstId) ? parseInt(req.params.rstId, 10)
-    : -1);
+   var revId = typeof(req.params.revId) === 'number' ?
+    req.params.revId
+    : (typeof(req.params.revId)==='string' && /^\d+$/.test(req.params.revId) ?
+    parseInt(req.params.revId, baseTen)
+    : 0-1);
+   var rstId = typeof(req.params.rstId) === 'number' ?
+    req.params.rstId
+    : (typeof(req.params.rstId)==='string' && /^\d+$/.test(req.params.rstId) ?
+    parseInt(req.params.rstId, baseTen)
+    : 0-1);
    var prsId = req.session && req.session.id;
 
    async.waterfall([
    function(cb) {
       vld.checkLoggedIn(cb)
        && vld.hasFields(body, ["voteValue"], cb)
-       && vld.chain(typeof(body.voteValue) === 'number' && (body.voteValue === -1 || body.voteValue === 1),
+       && vld.chain(typeof(body.voteValue) === 'number' &&
+       (body.voteValue === -1 || body.voteValue === 1),
        Tags.badValue, ['voteValue'])
        .chain(rstId && rstId > 0, Tags.badValue, ['rstId'])
        .check(revId && revId > 0, Tags.badValue, ['revId'], cb)
@@ -106,12 +117,16 @@ router.delete('/:rstId/:revId', function(req, res) {
    + ' from Vote v'
    + ' where v.rstId = ? and v.revId = ? and v.prsId = ?';
 
-   var revId = typeof(req.params.revId) === 'number' ? releaseEvents.params.revId
-    : (typeof(req.params.revId)==='string' && /^\d+$/.test(req.params.revId) ? parseInt(req.params.revId, 10)
-    : -1);
-   var rstId = typeof(req.params.rstId) === 'number' ? releaseEvents.params.rstId
-    : (typeof(req.params.rstId)==='string' && /^\d+$/.test(req.params.rstId) ? parseInt(req.params.rstId, 10)
-    : -1);
+   var revId = typeof(req.params.revId) === 'number' ?
+    req.params.revId
+    : (typeof(req.params.revId)==='string' &&
+    /^\d+$/.test(req.params.revId) ? parseInt(req.params.revId, baseTen)
+    : 0-1);
+   var rstId = typeof(req.params.rstId) === 'number' ?
+    req.params.rstId
+    : (typeof(req.params.rstId)==='string' &&
+    /^\d+$/.test(req.params.rstId) ? parseInt(req.params.rstId, baseTen)
+    : 0-1);
    var prsId = req.session && req.session.id;
 
    async.waterfall([
