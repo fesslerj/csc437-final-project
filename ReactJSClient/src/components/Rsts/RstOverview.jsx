@@ -127,7 +127,7 @@ const RstItem = function (props) {
             </Col>
             {props.category ? 
                <Col key={`${props.id}/catg`} sm={3}>{
-                  <a href={"/Catg/" + props.category}>{props.category}</a>||''}
+                  <Link to={`/Catg/${props.category}`}>{props.category}</Link>}
                </Col> : ''}
             {props.showControls ?
                <div className="pull-right">
