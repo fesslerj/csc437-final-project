@@ -7,7 +7,6 @@ import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
 import { faSortUp as upVote } from '@fortawesome/free-solid-svg-icons' 
 import { faSortDown as downVote } from '@fortawesome/free-solid-svg-icons' 
-import "./RstDetail.css"
 
 export default class RstDetail extends Component {
    constructor(props) {
