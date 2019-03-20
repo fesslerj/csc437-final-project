@@ -121,13 +121,7 @@ const RstItem = function (props) {
             <Col sm={4}><Link to={"/RstDetail/" + props.id}>{props.title}
                </Link>
             </Col>
-            {props.category ? <Col key={`${props.id}/catg`} sm={3}>{props.category||''}</Col> : ''}
-            <Col sm={3}>{props.lastReview ? new Intl.DateTimeFormat('us',
-               {
-                  year: "numeric", month: "short", day: "numeric",
-                  hour: "2-digit", minute: "2-digit", second: "2-digit"
-               })
-               .format(new Date(props.lastReview)) : 'N/A'}</Col>
+            {props.category ? <Col key={`${props.id}/catg`} sm={3}>{<a href={"/Catg/" + props.category}>{props.category}</a>||''}</Col> : ''}
             {props.showControls ?
                <div className="pull-right">
                   <Button bsSize="small" onClick={props.onDelete}>
