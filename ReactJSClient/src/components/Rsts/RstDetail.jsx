@@ -87,6 +87,10 @@ export default class RstDetail extends Component {
       if(this.props.Prss.id)
          this.props.modVot(rstId, reviewId, -1);
    }
+
+   handleAddResponseClick  = (rstId, reviewId) => {
+      // TODO: Integrate reponse
+   }
  
    render() {
       let matchId = this.props.match.params.id;
@@ -115,8 +119,10 @@ export default class RstDetail extends Component {
                auVote={myVot}
                name={rev.firstName + " " + rev.lastName}
                handleUpVote={() => this.handleUpVoteClick(myRst.id, rev.id)}
-               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)} />);
-         });
+               handleDownVote={() => this.handleDownVoteClick(myRst.id, rev.id)}
+               currentOwner={this.props.Prss.id && myRst.ownerId === this.props.Prss.id}
+               addResponse={() => this.handleAddResponseClick(myRst.id, rev.id) } />);
+            });
       }
 
       return (
@@ -204,6 +210,13 @@ const RevItem = function (props) {
                      <p style={{padding: "0px", margin: "0px"}}>
                         {props.content}
                      </p>
+                  </Row>
+                  <Row bsStyle="pull-right" style={{paddingRight:"60px"}} className="pull-right">
+                  <Button 
+                   bsStyle={props.currentOwner ? "primary" : "primary hidden"}
+                   onClick={props.addResponse}>
+                     Add Response
+                  </Button>
                   </Row>
                </Col>
             </Row>
