@@ -178,7 +178,7 @@ export function updateVot(rstId, revId) {
 }
 
 /**
- * Get a user's vote on a given review
+ * Change a user's vote on a given review
  * @param {(number|string)} rstId the restaurant ID
  * @param {(number|string)} revId the review ID
  * @param {(number|string)} vote vote - MUST BE -1 OR 1
@@ -187,6 +187,22 @@ export function updateVot(rstId, revId) {
 export function modVot(rstId, revId, vote, cb = undefined) {
    return (dispatch, prevState) => {
       api.postVot(rstId, revId, vote)
+      .then(() => api.getVot(rstId, revId))
+      .then((vote) => dispatch({ type: 'UPDATE_VOT', revId, vote}))
+      .then(() => {if (cb) cb();})
+      .catch(error => dispatch(prepareError('UPDATE_VOT_ERR', error)));
+   };
+}
+
+/**
+ * Remove a user's vote on a given review
+ * @param {(number|string)} rstId the restaurant ID
+ * @param {(number|string)} revId the review ID
+ * @param {?function} [cb] OPTIONAL callback
+ */
+export function delVot(rstId, revId, cb = undefined) {
+   return (dispatch, prevState) => {
+      api.delVot(rstId, revId)
       .then(() => api.getVot(rstId, revId))
       .then((vote) => dispatch({ type: 'UPDATE_VOT', revId, vote}))
       .then(() => {if (cb) cb();})
